@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(authenticateJWT); 
 
-const PORT = process.env.PORT || 2000; // set PORT=2002 && npm start
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
