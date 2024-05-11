@@ -10,7 +10,7 @@ const getAllUsers = async (req, res,) => {
         const users = await userService.getAllCitizenUsers();
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -25,7 +25,7 @@ const getUserById = async (req, res) => {
         req.user = user; // Attach user object to req
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -37,6 +37,7 @@ const registerUser = async (req, res) => {
         sendEmail(user.email,'Welcome to City Administrator System!', user)
         res.status(201).json(user);
     } catch (error) {
+        console.log(error.message)
         res.status(400).json({ message: error.message });
     }
 };

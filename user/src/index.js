@@ -6,9 +6,9 @@ import { isAdmin, isCitizen, isCitizenOrAdmin } from './middleware/middleware.js
 import { authenticateJWT } from './services/auth.service.js';
 
 const app = express();
-app.use(cors()); // needed to avoid CORS errors in frontend app 
+app.use(cors()); 
 app.use(express.json());
-app.use(authenticateJWT); // uncomment to use authentication and authorization
+app.use(authenticateJWT); 
 
 const PORT = process.env.PORT || 2000; // set PORT=2002 && npm start
 
@@ -20,4 +20,4 @@ app.get('/users/:id', isAdmin, getAllUsers)
 app.get('/user/:id', isCitizenOrAdmin, getUserById)
 app.post('/register', registerUser);
 app.post('/login', loginUser);
-app.put('/user/:id',isAdmin, updateUserProfile);
+app.put('/user/:id',isCitizenOrAdmin, updateUserProfile);

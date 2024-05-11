@@ -2,43 +2,64 @@ import userService from "../services/user.service.js";
 
 const isAdmin = async (req, res, next) => {
     let resp;
-if(req.params && req.params.id){
-    resp = await userService.getUserById(req.params.id);
-}
-else{
-    resp = req.body;
-}
-    if (resp && resp.role === 'admin') {
-        next();
-    } else {
-        res.status(403).json({ message: 'Unauthorized: Admin access required' });
+    try {
+        if (req.params && req.params.id) {
+            resp = await userService.getUserById(req.params.id);
+            if (!resp) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+        }
+        else {
+            resp = req.body;
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'User not found' });
     }
+
+if (resp && resp.role === 'admin') {
+    next();
+} else {
+    res.status(403).json({ message: 'Unauthorized: Admin access required' });
 };
+}
 
 const isCitizen = async (req, res, next) => {
     let resp;
-    if(req.params && req.params.id){
-        resp = await userService.getUserById(req.params.id);
-    }
-    else{
-        resp = req.body;
+    try {
+        if (req.params && req.params.id) {
+            resp = await userService.getUserById(req.params.id);
+            if (!resp) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+        }
+        else {
+            resp = req.body;
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'User not found' });
     }
 
     if (resp && resp.role === 'citizen') {
-        next(); 
+        next();
     } else {
         res.status(403).json({ message: 'Unauthorized: Citizen access required' });
     }
 };
 
 const isCitizenOrAdmin = async (req, res, next) => {
-
     let resp;
-    if(req.params && req.params.id){
-        resp = await userService.getUserById(req.params.id);
-    }
-    else{
-        resp = req.body;
+    try {
+        if (req.params && req.params.id) {
+            resp = await userService.getUserById(req.params.id);
+            if (!resp) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+        }
+        else {
+            resp = req.body;
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'User not found' });
     }
 
     if ((resp && resp.role === 'citizen') || (resp && resp.role === 'admin')) {

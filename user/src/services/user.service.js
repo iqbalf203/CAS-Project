@@ -30,7 +30,11 @@ const registerUser = async (userData) => {
         await user.save();
         return user;
     } catch (error) {
-        throw new Error('Registration failed. Please try again.');
+        if (error.message.includes('duplicate key')) {
+            throw new Error(`USER_ALREADY_EXIST: User with ${userData.username} already exist!`);
+        } else {
+            throw new Error('Registration failed. Please try again.');
+        }
     }
 };
 
