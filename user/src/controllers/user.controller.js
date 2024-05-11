@@ -1,6 +1,7 @@
 import userService from '../services/user.service.js';
 import { generateToken } from '../services/auth.service.js';
 import { isAdmin,isCitizen } from '../middleware/middleware.js';
+import { sendEmail } from '../services/email.service.js';
 
 
 const getAllUsers = async (req, res,) => {
@@ -33,6 +34,7 @@ const registerUser = async (req, res) => {
     console.log(req.body);
     try {
         const user = await userService.registerUser(req.body);
+        sendEmail(user.email,'Welcome to City Administrator System!', user)
         res.status(201).json(user);
     } catch (error) {
         res.status(400).json({ message: error.message });
