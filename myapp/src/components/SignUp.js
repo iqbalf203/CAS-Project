@@ -4,8 +4,7 @@ import {
   MDBContainer,
   MDBCard,
   MDBCardBody,
-  MDBInput,
-  MDBCheckbox
+  MDBInput
 }
 from 'mdb-react-ui-kit';
 import './SignUp.css'

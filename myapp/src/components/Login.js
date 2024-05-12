@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon, MDBCheckbox } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput} from 'mdb-react-ui-kit';
 import UserService from '../services/UserService';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser, setLoggedIn, setToken } from '../redux/UserSlice';
@@ -22,7 +22,7 @@ const Login = () => {
 
 
         try {
-
+            console.log(credentials)
             const resp = await UserService.login(credentials);
 
             if (resp.status === 200) {
@@ -39,7 +39,7 @@ const Login = () => {
 
         } catch (error) {
             toast.error('Invalid credentials')
-            setCredentials({ username: '', password: '' })
+            // setCredentials({ username: '', password: '' })
             console.error('Login failed:', error.message);
         }
     };

@@ -76,20 +76,10 @@ function NavBar() {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="complaintsDropdown">
                                 <li>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => handleLinkClick('RaiseComplaint')}
-                                    >
-                                        Raise Complaint
-                                    </button>
+                                   <Link className='link-no-underline' to={'/raise-complaint'}> <button className="dropdown-item">Raise Complaint</button></Link>
                                 </li>
                                 <li>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => handleLinkClick('MyComplaints')}
-                                    >
-                                        My Complaints
-                                    </button>
+                                   <Link className='link-no-underline' to={'/show-complaint'}> <button className="dropdown-item" onClick={() => handleLinkClick('MyComplaints')}>My Complaints</button></Link>
                                 </li>
                                 <li>
                                     <button
