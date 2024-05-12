@@ -1,0 +1,15 @@
+
+.nav-item{
+
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.navbar .btn{
+
+    margin-right: 4rem;
+}
+
+.link-no-underline {
+    text-decoration: none;
+}

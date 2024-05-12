@@ -56,9 +56,9 @@ const sendEmail = (eTo,eSubject,user)=>{
     </head>
     <body>
         <div class="container"><strong>
-            <h1>Welcome to City Administrator System!</h1>
+            <h1>Welcome to City Administration System!</h1>
             <p>Dear ${user.name},</p>
-            <p>We are thrilled to welcome you to City Administrator System! Your registration was successful, and you are now part of our community.</p>
+            <p>We are thrilled to welcome you to City Administration System! Your registration was successful, and you are now part of our community.</p>
             <p>Here are your registration details:</p>
             <ul>
                 <li>Username: ${user.username}</li>

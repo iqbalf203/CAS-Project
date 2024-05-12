@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
     console.log(req.body);
     try {
         const user = await userService.registerUser(req.body);
-        sendEmail(user.email,'Welcome to City Administrator System!', user)
+        sendEmail(user.email,'Welcome to City Administration System!', user)
         res.status(201).json(user);
     } catch (error) {
         console.log(error.message)
@@ -58,7 +58,7 @@ const loginUser = async (req, res) => {
 const updateUserProfile = async (req, res) => {
     console.log('controller');
     console.log(req.body);
-    console.log(req.params.id);
+    console.log(req.params.id); 
     const userId = req.params.id;
     const updatedData = req.body;
     try {

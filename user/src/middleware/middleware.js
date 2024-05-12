@@ -16,7 +16,7 @@ const isAdmin = async (req, res, next) => {
         return res.status(500).json({ message: 'User not found' });
     }
 
-if (resp && resp.role === 'admin') {
+if (resp && resp.role === 'Admin') {
     next();
 } else {
     res.status(403).json({ message: 'Unauthorized: Admin access required' });
@@ -39,7 +39,7 @@ const isCitizen = async (req, res, next) => {
         return res.status(500).json({ message: 'User not found' });
     }
 
-    if (resp && resp.role === 'citizen') {
+    if (resp && resp.role === 'Citizen') {
         next();
     } else {
         res.status(403).json({ message: 'Unauthorized: Citizen access required' });
@@ -62,7 +62,7 @@ const isCitizenOrAdmin = async (req, res, next) => {
         return res.status(500).json({ message: 'User not found' });
     }
 
-    if ((resp && resp.role === 'citizen') || (resp && resp.role === 'admin')) {
+    if ((resp && resp.role === 'Citizen') || (resp && resp.role === 'Admin')) {
         next(); // User is either a citizen or an admin, proceed to the next middleware or route handler
     } else {
         res.status(403).json({ message: 'Unauthorized: Citizen or Admin access required' });
