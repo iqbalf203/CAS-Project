@@ -4,6 +4,7 @@ import NavBar from './NavBar'
 import { useSelector } from 'react-redux'
 import Login from './Login'
 import Profile from './Profile'
+import SignUp from './SignUp'
 
 
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
            {/* <Route path='/home' Component={home}></Route> */}
           <Route path='/login' Component={Login}></Route> 
           <Route path='/profile' Component={Profile}></Route>
+          <Route path='/signup' Component={SignUp}></Route>
 
           {/* {!isLoggedIn && <Route path='/login' element={<Login /> }></Route>}
         <Route path='/dashboard' Component={Dashboard}> </Route>

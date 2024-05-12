@@ -30,6 +30,18 @@ const UserService = {
         }
     
     },
+
+    registerUser: async (newUser)=>{
+        try {
+            const resp = await axios.post(`${BASE_URL}/register`,newUser)
+
+            return resp.data
+
+        } catch (error) {
+
+            throw (error)
+        }
+    },
     
     updateUser: async (userId,token,updateData)=>{
         try {

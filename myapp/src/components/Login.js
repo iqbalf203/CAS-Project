@@ -4,7 +4,8 @@ import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, M
 import UserService from '../services/UserService';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser, setLoggedIn, setToken } from '../redux/UserSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './SignUp.css';
 
 const Login = () => {
 
@@ -50,8 +51,8 @@ const Login = () => {
 
     return (
         <>
-            <MDBContainer fluid>
-
+            <MDBContainer className='align-items-center justify-content-center bg-image' fluid style={{ backgroundImage: 'url(https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp)' }}>
+            <div className='mask gradient-custom-3'></div>
                 <MDBRow className='d-flex justify-content-center align-items-center h-100'>
                     <MDBCol col='12'>
 
@@ -70,7 +71,7 @@ const Login = () => {
 
 
                                 <p className="small mb-4 pb-lg-3 text-center"><a className="text-muted" href="#!">Forgot password?</a></p>
-                                <p className='text-center'>Don't have an account? <a href="#!" className="link-info">Register here</a></p>
+                                <p className='text-center'>Don't have an account?<Link className='link-no-underline' to={'/signup'}> Register here</Link></p>
 
 
                             </MDBCardBody>
@@ -78,7 +79,7 @@ const Login = () => {
 
                     </MDBCol>
                 </MDBRow>
-
+<br/><br/><br/><br/><br/>
             </MDBContainer>
             <ToastContainer />
 
