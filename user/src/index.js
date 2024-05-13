@@ -3,6 +3,8 @@
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserById, getAllUsers } from './controllers/user.controller.js';
 import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint } from './controllers/complaint.controller.js'
+import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion } from './controllers/suggestion.controller.js';
+
 import './config/db.connection.js';
 import cors from 'cors';
 import { isAdmin, isCitizen, isCitizenOrAdmin } from './middleware/middleware.js';
@@ -19,6 +21,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+
 // User requests
 // ==============================================================
 app.get('/users/:id', isAdmin, getAllUsers)
@@ -34,3 +37,12 @@ app.get('/complaint-by-complaintId/:id',getComplaintByComplaintId)
 app.get('/complaint-by-creatorId/:id', isCitizenOrAdmin,getComplaintByCreatorId)
 app.post('/complaint', isCitizen, createComplaint)
 app.put('/complaint',isAdmin,updateComplaint)
+
+
+// Suggestion requests
+// ==============================================================
+app.get('/suggestions',isCitizenOrAdmin, getAllSuggestions); //worked
+app.get('/suggestion-by-id/:id', getSuggestionById); //worked
+app.get('/suggestion-by-creatorId/:id', isCitizenOrAdmin,getSuggestionByCreator); //worked
+app.post('/suggestion',isCitizen,createSuggestion); //worked
+app.put('/suggestion/:id',isAdmin, updateSuggestion);//worked
