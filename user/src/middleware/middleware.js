@@ -26,7 +26,14 @@ if (resp && resp.role === 'Admin') {
 const isCitizen = async (req, res, next) => {
     let resp;
     try {
-        if (req.params && req.params.id) {
+        console.log("===",req.body.creator)
+        if(req.body && req.body.creator){
+            resp = await userService.getUserById(req.body.creator);
+            if (!resp) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+        }
+        else if (req.params && req.params.id) {
             resp = await userService.getUserById(req.params.id);
             if (!resp) {
                 return res.status(404).json({ message: 'User not found' });

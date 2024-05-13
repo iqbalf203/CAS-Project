@@ -27,6 +27,7 @@ const Login = () => {
 
             if (resp.status === 200) {
 
+                console.log(resp.data.user._id)
                 dispatch(setLoggedIn(true))
                 dispatch(setCurrentUser(resp.data.user))
                 dispatch(setToken(resp.data.token))

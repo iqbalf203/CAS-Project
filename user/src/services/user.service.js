@@ -4,7 +4,7 @@ import User from '../models/user.model.js';
 const getAllCitizenUsers = async () => {
     console.log('service');
     try {
-        const users = await User.find({ role: 'citizen' });
+        const users = await User.find({ role: 'Citizen' });
         return users;
     } catch (error) {
         throw new Error('Failed to fetch citizen users');
