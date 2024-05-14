@@ -1,5 +1,4 @@
-// FAISAL 
-
+ 
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserById, getAllUsers } from './controllers/user.controller.js';
 import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint } from './controllers/complaint.controller.js'
@@ -41,8 +40,8 @@ app.put('/complaint',isAdmin,updateComplaint)
 
 // Suggestion requests
 // ==============================================================
-app.get('/suggestions',isCitizenOrAdmin, getAllSuggestions); //worked
-app.get('/suggestion-by-id/:id', getSuggestionById); //worked
-app.get('/suggestion-by-creatorId/:id', isCitizenOrAdmin,getSuggestionByCreator); //worked
-app.post('/suggestion',isCitizen,createSuggestion); //worked
-app.put('/suggestion/:id',isAdmin, updateSuggestion);//worked
+app.get('/suggestions',isCitizenOrAdmin, getAllSuggestions);
+app.get('/suggestion-by-id/:id', getSuggestionById);
+app.get('/suggestion-by-creatorId/:id', isCitizenOrAdmin,getSuggestionByCreator);
+app.post('/suggestion',isCitizen,createSuggestion);
+app.put('/suggestion/:id',isAdmin, updateSuggestion);

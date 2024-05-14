@@ -1,61 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardBody, CardTitle, CardText, Badge, Col } from 'react-bootstrap';
+import ComplaintService from '../services/ComplaintService';
+import {useSelector} from 'react-redux'
 
 const ShowComplaint = () => {
-  const sampleComplaints = [
-    {
-      id: 1,
-      title: 'Loud Construction Noise',
-      description: 'Construction noise occurring during late hours, disturbing residents.',
-      status: 'open',
-      address: {
-        addressLine1: '123 Main Street',
-        city: 'Cityville',
-        state: 'Stateville',
-        pincode: '12345'
-      },
-      complaintType: 'Noise'
-    },
-    {
-      id: 2,
-      title: 'Pothole on Main Road',
-      description: 'Large pothole causing traffic congestion and damage to vehicles.',
-      status: 'in progress',
-      address: {
-        addressLine1: '456 Elm Street',
-        city: 'Townsville',
-        state: 'Stateville',
-        pincode: '54321'
-      },
-      complaintType: 'Road Maintenance'
-    },
-    {
-      id: 3,
-      title: 'Garbage Overflow',
-      description: 'Overflowing garbage bins on street corners attracting pests and creating a health hazard.',
-      status: 'resolved',
-      address: {
-        addressLine1: '789 Oak Avenue',
-        city: 'Villageton',
-        state: 'Stateville',
-        pincode: '67890'
-      },
-      complaintType: 'Waste Management'
-    },
-    {
-        id: 4,
-        title: 'Unauthorized Parking',
-        description: 'Vehicles parked in no-parking zones causing obstruction to traffic flow. Look out for the issue',
-        status: 'dismissed',
-        address: {
-          addressLine1: '101 Oak Street',
-          city: 'Cityville',
-          state: 'Stateville',
-          pincode: '54321'
-        },
-        complaintType: 'Public Safety'
-      }
-  ];
+  
+  const [complaints,setComplaints] = useState([]);
+  const userId = useSelector(store=>store.user.currentUser._id)
+
+  useEffect(()=>{
+    ComplaintService.getComplaintByCreatorId(userId).then((resp)=>{
+      console.log(resp)
+      setComplaints(resp.data)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[])
+ 
 
   const getStatusBadgeVariant = (status) => {
     switch (status) {
@@ -74,8 +35,8 @@ const ShowComplaint = () => {
 
   return (
     <div className="row">
-      {sampleComplaints.map(complaint => (
-        <div className="col-sm-6 mt-4" key={complaint.id}>
+      {complaints.map(complaint => (
+        <div className="col-sm-6 mt-4" key={complaints.indexOf(complaint)+1}>
         <Col >
           <Card>
             <CardBody>

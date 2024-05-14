@@ -30,7 +30,7 @@ const getComplaintByComplaintId = async (complaintId) => {
 
 const getComplaintByCreatorId = async (creatorId) => {
     try {
-        const complaint = await Complaint.findOne({creator: creatorId})
+        const complaint = await Complaint.find({creator: creatorId})
         return complaint;
     } catch (error) {
         throw new Error('Failed to fetch complaint by creator ID');

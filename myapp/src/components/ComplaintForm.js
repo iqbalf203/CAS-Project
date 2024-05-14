@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import ComplaintService from '../services/ComplaintService';
+import { useSelector } from 'react-redux';
 
 const complaintTypes = ['Noise', 'Road Maintenance', 'Waste Management', 'Public Safety', 'Infrastructure', 'Environmental', 'Building Code', 'Traffic'];
 
 const ComplaintForm = ()=> {
+
+  const userId = useSelector(store=>store.user.currentUser._id)
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     status: 'open',
+    creator: '',
     address: {
       addressLine1: '',
       state: '',
@@ -14,7 +20,6 @@ const ComplaintForm = ()=> {
       pincode: ''
     },
     complaintType: '',
-    creator: '',
     creationDate: new Date().toISOString().slice(0, 10),
     lastUpdatedDate: new Date().toISOString().slice(0, 10)
   });
@@ -37,9 +42,12 @@ const ComplaintForm = ()=> {
       }
     });
   };
-
+let newFormData;
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Id from complaint form-",userId)
+    newFormData = {...formData,'creator': userId}
+    ComplaintService.createComplaint(newFormData)
     console.log(formData);
   };
 

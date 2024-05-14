@@ -21,7 +21,22 @@ const complaintSchema = new mongoose.Schema({
     enum: ['open', 'in progress', 'resolved', 'dismissed'], 
     default: 'open'
   },
-  address: { type: String, required: true }, 
+  
+  address: {
+    addressLine1: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    pincode: {
+      type: String
+    }
+  },
+
   complaintType: { 
     type: String, 
     enum: complaintTypes,
