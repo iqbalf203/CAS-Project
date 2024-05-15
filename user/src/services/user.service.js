@@ -22,6 +22,17 @@ const getUserById = async (userId) => {
     }
 };
 
+const getUserByUserName = async (username) => {
+    console.log('service');
+    console.log(username);
+    try {
+        const user = await User.findOne({ username });
+        return user;
+    } catch (error) {
+        throw new Error('Failed to fetch user by ID');
+    }
+};
+
 const registerUser = async (userData) => {
     console.log('service');
     console.log(userData);
@@ -68,6 +79,6 @@ const updateUserProfile = async (userId, updatedData) => {
     }
 };
 
-const userService = {getAllCitizenUsers,getUserById, registerUser, loginUser, updateUserProfile };
+const userService = {getAllCitizenUsers,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile };
 
 export default userService;

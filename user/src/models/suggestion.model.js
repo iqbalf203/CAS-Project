@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 const suggestionSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
+    category: {
+        type: String,
+        enum: ["Infrastructure", "Public Services", "Environment", "Transportation", "Other"],
+        required: true
+    },
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],

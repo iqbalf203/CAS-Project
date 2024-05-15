@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput} from 'mdb-react-ui-kit';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 import UserService from '../services/UserService';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser, setLoggedIn, setToken } from '../redux/UserSlice';
@@ -12,10 +15,15 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [username,setUsername] = useState({})
+    const [show, setShow] = useState(false);
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
     })
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,6 +58,25 @@ const Login = () => {
         setCredentials({ ...credentials, [event.target.name]: event.target.value })
     }
 
+    const handleUsernameChange = (event)=>{
+
+        setUsername({[event.target.name]:event.target.value})
+
+    }
+
+    const handleGetPassword = async ()=>{
+        try {
+            const resp = await UserService.forgotPassword(username)
+            if(resp.status === 200){
+               toast.success('Password Sent to Mail')
+            }
+        } catch (error) {
+            toast.error('Username does not exist');
+        }
+       
+        setShow(false)
+    }
+
     return (
         <>
             <MDBContainer className='align-items-center justify-content-center bg-image' fluid style={{ backgroundImage: 'url(https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp)' }}>
@@ -71,7 +98,7 @@ const Login = () => {
                                 <hr className="my-4" />
 
 
-                                <p className="small mb-4 pb-lg-3 text-center"><a className="text-muted" href="#!">Forgot password?</a></p>
+                                <a className='text-muted' href='#' onClick={handleShow}><p className="small mb-4 pb-lg-3 text-center">Forgot password?</p></a>
                                 <p className='text-center'>Don't have an account?<Link className='link-no-underline' to={'/signup'}> Register here</Link></p>
 
 
@@ -82,6 +109,36 @@ const Login = () => {
                 </MDBRow>
 <br/><br/><br/><br/><br/>
             </MDBContainer>
+
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Forgot Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your username"
+                name='username'
+                onChange={handleUsernameChange}
+                autoFocus
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleGetPassword}>
+            Send Password
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
             <ToastContainer />
 
         </>

@@ -40,12 +40,7 @@ function NavBar() {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="suggestionsDropdown">
                                 <li>
-                                   <Link className='link-no-underline' to={'/submit-suggestion'}> <button
-                                        className="dropdown-item"
-                                        onClick={() => handleLinkClick('SubmitSuggestion')}
-                                    >
-                                        Submit Suggestion
-                                    </button></Link>
+                                   <Link className='link-no-underline' to={'/submit-suggestion'}> <button className="dropdown-item">Submit Suggestion</button></Link>
                                 </li>
                                 <li>
                                     <button
@@ -56,12 +51,7 @@ function NavBar() {
                                     </button>
                                 </li>
                                 <li>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => handleLinkClick('AllSuggestions')}
-                                    >
-                                        All Suggestions
-                                    </button>
+                                <Link className='link-no-underline' to={'/show-suggestion'}> <button className="dropdown-item">All Suggestions</button></Link>
                                 </li>
                             </ul>
                         </li>
@@ -79,15 +69,10 @@ function NavBar() {
                                    <Link className='link-no-underline' to={'/raise-complaint'}> <button className="dropdown-item">Raise Complaint</button></Link>
                                 </li>
                                 <li>
-                                   <Link className='link-no-underline' to={'/show-complaint'}> <button className="dropdown-item" onClick={() => handleLinkClick('MyComplaints')}>My Complaints</button></Link>
+                                   <Link className='link-no-underline' to={'/show-complaint'}> <button className="dropdown-item">My Complaints</button></Link>
                                 </li>
                                 <li>
-                                    <button
-                                        className="dropdown-item"
-                                        onClick={() => handleLinkClick('AllComplaints')}
-                                    >
-                                        All Complaints
-                                    </button>
+                                <Link className='link-no-underline' to={'/show-complaint'}><button className="dropdown-item" >All Complaints</button></Link>
                                 </li>
                             </ul>
                         </li>

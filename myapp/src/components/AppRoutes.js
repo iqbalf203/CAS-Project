@@ -7,6 +7,8 @@ import Profile from './Profile'
 import SignUp from './SignUp'
 import ComplaintForm from './ComplaintForm'
 import ShowComplaint from './ShowComplaint'
+import SuggestionForm from './SuggestionForm'
+import ShowSuggestion from './ShowSuggestion'
 
 
 const AppRoutes = () => {
@@ -27,6 +29,9 @@ const AppRoutes = () => {
           <Route path='/signup' Component={SignUp}></Route>
           <Route path='/raise-complaint' Component={ComplaintForm}></Route>
           <Route path='/show-complaint' Component={ShowComplaint}></Route>
+          <Route path='/all-complaints' Component={ShowComplaint}></Route>
+          <Route path='/submit-suggestion' Component={SuggestionForm}></Route>
+          <Route path='/show-suggestion' Component={ShowSuggestion}></Route>
 
           {/* {!isLoggedIn && <Route path='/login' element={<Login /> }></Route>}
         <Route path='/dashboard' Component={Dashboard}> </Route>

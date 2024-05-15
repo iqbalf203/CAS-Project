@@ -29,12 +29,29 @@ const getUserById = async (req, res) => {
     }
 };
 
+const getUserByUserName = async (req, res) => {
+    console.log('controller');
+    try {
+        console.log(req)
+        const user = await userService.getUserByUserName(req.body.username);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const newPassword = Math.random().toString(36).substring(2, 12);
+        const updatedUser = await userService.updateUserProfile(user.id,{password: newPassword});
+        sendEmail(updatedUser,'Your Password Has Been Successfully Reset','forgotPassword', updatedUser)
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const registerUser = async (req, res) => {
     console.log('controller');
     console.log(req.body);
     try {
         const user = await userService.registerUser(req.body);
-        sendEmail(user.email,'Welcome to City Administration System!', user)
+        sendEmail(user,'Welcome to City Administration System!','welcome', user)
         res.status(201).json(user);
     } catch (error) {
         console.log(error.message)
@@ -69,4 +86,4 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-export {getAllUsers,getUserById, registerUser, loginUser, updateUserProfile };
+export {getAllUsers,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile };

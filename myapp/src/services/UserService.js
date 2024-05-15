@@ -31,6 +31,19 @@ const UserService = {
     
     },
 
+    forgotPassword: async (username)=>{
+        try {
+            
+            const resp = await axios.post(`${BASE_URL}/get-pass`,username)
+
+            return resp
+
+        } catch (error) {
+
+            throw (error)
+        }
+    },
+
     registerUser: async (newUser)=>{
         try {
             const resp = await axios.post(`${BASE_URL}/register`,newUser)

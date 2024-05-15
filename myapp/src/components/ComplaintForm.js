@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ComplaintService from '../services/ComplaintService';
 import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 
 const complaintTypes = ['Noise', 'Road Maintenance', 'Waste Management', 'Public Safety', 'Infrastructure', 'Environmental', 'Building Code', 'Traffic'];
 
@@ -19,9 +20,7 @@ const ComplaintForm = ()=> {
       city: '',
       pincode: ''
     },
-    complaintType: '',
-    creationDate: new Date().toISOString().slice(0, 10),
-    lastUpdatedDate: new Date().toISOString().slice(0, 10)
+    complaintType: ''
   });
 
   const handleChange = (e) => {
@@ -43,12 +42,32 @@ const ComplaintForm = ()=> {
     });
   };
 let newFormData;
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Id from complaint form-",userId)
     newFormData = {...formData,'creator': userId}
-    ComplaintService.createComplaint(newFormData)
-    console.log(formData);
+    try {
+      const complaint = await ComplaintService.createComplaint(newFormData)
+      if(complaint.status===201){
+        setFormData({
+          title: '',
+          description: '',
+          status: 'open',
+          creator: '',
+          address: {
+            addressLine1: '',
+            state: '',
+            city: '',
+            pincode: ''
+          },
+          complaintType: ''
+        })
+        toast.success('Complaint created')
+      }
+    } catch (error) {
+      toast.error('Please try again later!')
+    }
+    
   };
 
   return (
@@ -90,6 +109,7 @@ let newFormData;
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+      <ToastContainer/>
     </div>
   );
 }

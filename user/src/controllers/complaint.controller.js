@@ -1,4 +1,6 @@
 import complaintService from "../services/complaint.service.js";
+import userService from '../services/user.service.js';
+import { sendEmail } from "../services/email.service.js";
 
 const getAllComplaints = async (req, res,) => {
     console.log('controller');
@@ -60,7 +62,10 @@ const createComplaint = async (req, res) => {
     console.log(req.body);
     try {
         const complaint = await complaintService.createComplaint(req.body);
-        // sendEmail(complaint.email,'Welcome to City Administration System!', complaint)
+        console.log(req.body)
+        const user = await userService.getUserById(req.body.creator)
+        console.log(complaint.complaintId)
+        sendEmail(user,'Complaint Registration Confirmation','complaintRegistration', complaint.complaintId)
         res.status(201).json(complaint);
     } catch (error) {
         console.log(error.message)

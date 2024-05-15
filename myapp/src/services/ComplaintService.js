@@ -4,6 +4,16 @@ const BASE_URL = 'http://localhost:3001';
 
 const ComplaintService = {
 
+    getAllComplaints: async(userId)=>{
+
+        try {
+            const resp = await axios.get(`${BASE_URL}/complaints/${userId}`)
+            return resp;
+        } catch (error) {
+            throw error
+        }
+    },
+
     getComplaintByComplaintId: async (complaintId) => {
 
         try {
@@ -39,7 +49,7 @@ const ComplaintService = {
         try {
             console.log(complaintData)
 
-            const resp = await axios.post(`${BASE_URL}/complaint`,complaintData)
+            const resp = await axios.post(`${BASE_URL}/complaint`, complaintData)
             return resp;
 
         } catch (error) {
@@ -54,7 +64,7 @@ const ComplaintService = {
 
         try {
 
-            const resp = await axios.put(`${BASE_URL}/complaint`,complaintData)
+            const resp = await axios.put(`${BASE_URL}/complaint`, complaintData)
             return resp;
 
         } catch (error) {
