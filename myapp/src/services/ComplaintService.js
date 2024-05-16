@@ -60,11 +60,11 @@ const ComplaintService = {
 
     },
 
-    updateComplaint: async (complaintData) => {
+    updateComplaint: async (id,complaintData) => {
 
         try {
 
-            const resp = await axios.put(`${BASE_URL}/complaint`, complaintData)
+            const resp = await axios.put(`${BASE_URL}/complaint/${id}`, complaintData)
             return resp;
 
         } catch (error) {

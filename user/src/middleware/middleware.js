@@ -6,9 +6,14 @@ const isAdmin = async (req, res, next) => {
         if (req.params && req.params.id) {
             resp = await userService.getUserById(req.params.id);
             if (!resp) {
-                return res.status(404).json({ message: 'User not found' });
-            }
+                if(req.body && req.body.creator){
+                    resp = await userService.getUserById(req.body.creator);
+                }
+                else{
+                    return res.status(404).json({ message: 'User not found' });
+                }
         }
+    }
         else {
             resp = req.body;
         }

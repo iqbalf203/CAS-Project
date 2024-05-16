@@ -6,7 +6,7 @@ import Suggestion from "../models/suggestion.model.js";
 const getAllSuggestions = async () => {
     console.log('suggestion service');
     try {
-        const suggestions = await Suggestion.find()
+        const suggestions = await Suggestion.find().populate('creator', 'name');
         return suggestions;
     } catch (error) {
         throw new Error('Failed to fetch citizen suggestions');

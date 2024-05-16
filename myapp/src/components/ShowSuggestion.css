@@ -1,0 +1,41 @@
+.comments-section {
+    display: flex;
+    flex-direction: column;
+    height: 400px; /* Adjust the height as needed */
+}
+
+.comments-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px; /* Space between comments and form */
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.no-underline {
+    text-decoration: none;
+    color: inherit;
+}
+
+.no-underline:hover {
+    color: inherit;
+    text-decoration: none;
+}
+.card-title {
+    max-width: calc(100% - 60px); /* Adjust as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-description {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+}

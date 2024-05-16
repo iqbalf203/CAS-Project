@@ -2,8 +2,9 @@ import Complaint from "../models/complaint.model.js";
 
 
 const getAllComplaints = async () => {
+    console.log('complaint service')
     try {
-        const complaints = await Complaint.find();
+        const complaints = await Complaint.find().populate('creator','name')
         return complaints;
     } catch (error) {
         throw new Error('Failed to fetch complaints');
@@ -21,7 +22,8 @@ const getComplaintById = async (id) => {
 
 const getComplaintByComplaintId = async (complaintId) => {
     try {
-        const complaint = await Complaint.findOne({complaintId: complaintId})
+        const complaint = await Complaint.findOne({complaintId: complaintId}).populate('creator','name')
+        console.log(complaint)
         return complaint;
     } catch (error) {
         throw new Error('Failed to fetch complaint by complaint ID');
@@ -56,7 +58,7 @@ const createComplaint = async (complaintData) => {
 
 const updateComplaint = async (id, updatedData) => {
     try {
-        const complaint = await User.findByIdAndUpdate(id, updatedData, { new: true });
+        const complaint = await Complaint.findByIdAndUpdate(id, updatedData, { new: true });
         if (!complaint) {
             throw new Error('Complaint not found');
         }

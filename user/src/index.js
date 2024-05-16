@@ -25,7 +25,7 @@ app.listen(PORT, () => {
 
 // User requests
 // ==============================================================
-app.get('/users/:id', isAdmin, getAllUsers)
+app.get('/users/:id', isCitizenOrAdmin, getAllUsers)
 app.get('/user/:id', isCitizenOrAdmin, getUserById)
 app.post('/get-pass',getUserByUserName)
 app.post('/register', registerUser);
@@ -39,7 +39,8 @@ app.get('/complaints/:id',isAdmin, getAllComplaints)
 app.get('/complaint-by-complaintId/:id',getComplaintByComplaintId)
 app.get('/complaint-by-creatorId/:id', isCitizenOrAdmin,getComplaintByCreatorId)
 app.post('/complaint', isCitizen, createComplaint)
-app.put('/complaint',isAdmin,updateComplaint)
+// app.put('/complaint/:id',isAdmin,updateComplaint)
+app.put('/complaint/:id',updateComplaint)
 
 
 // Suggestion requests
@@ -48,7 +49,8 @@ app.get('/suggestions', getAllSuggestions);
 app.get('/suggestion-by-id/:id', getSuggestionById);
 app.get('/suggestion-by-creatorId/:id', isCitizenOrAdmin,getSuggestionByCreator);
 app.post('/suggestion',isCitizen,createSuggestion);
-app.put('/suggestion/:id',isAdmin, updateSuggestion);
+// app.put('/suggestion/:id',isAdmin, updateSuggestion);
+app.put('/suggestion/:id',updateSuggestion);
 
 
 // Comment requests

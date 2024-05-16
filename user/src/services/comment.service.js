@@ -34,7 +34,7 @@ const getCommentByCreatorId = async (creatorId) => {
 const getCommentBySuggestionId = async (suggestionId) => {
   try {
     console.log(suggestionId)
-      const suggestion = await Comment.find({suggestion: suggestionId})
+      const suggestion = await Comment.find({suggestion: suggestionId}).populate('creator', 'name')
       return suggestion;
   } catch (error) {
       throw new Error('Failed to fetch suggestion by suggestion ID');
