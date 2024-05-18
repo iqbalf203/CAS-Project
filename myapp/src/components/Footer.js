@@ -92,7 +92,7 @@ const Footer = () => {
           {/* First row with three members */}
           <li style={listItemStyle}>
             <p style={teamMemberNameStyle}>Faisal Iqbal</p>
-            <p style={teamMemberDetailStyle}>Faisal@gamil.com</p>
+            <p style={teamMemberDetailStyle}>Faisal@gmail.com</p>
             <p style={teamMemberDetailStyle}>123-456-7890</p>
           </li>
           <li style={listItemStyle}>
