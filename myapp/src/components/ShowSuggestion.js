@@ -17,7 +17,7 @@ const ShowSuggestion = () => {
     const [showCommentBox, setShowCommentBox] = useState({});
     const user = useSelector(store => store.user.currentUser);
     const userId = user._id;
-    const isAdmin = user.role === 'Admin'
+    const isEmployee = user.role === 'Employee'
     const [newStatus, setNewStatus] = useState();
 
     useEffect(() => {
@@ -200,7 +200,7 @@ const ShowSuggestion = () => {
                                             </Button>
                                         )}
                                     </div>
-                                    {isAdmin && (
+                                    {isEmployee && (
                                         <Form.Group controlId="newStatus">
                                             <Form.Label>Update Status:</Form.Label>
                                             <Form.Select onChange={(e) => setNewStatus(e.target.value)} value={newStatus}>

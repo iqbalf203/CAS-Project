@@ -12,13 +12,14 @@ const ShowComplaint = () => {
   const [selectedType, setSelectedType] = useState('');
   const user = useSelector(store=>store.user.currentUser);
   const userId = user._id;
+  const isEmployee = user.role === 'Employee'
 
   useEffect(() => {
     fetchComplaints()
   }, []);
 
 const fetchComplaints = ()=>{
-  if (user.role === 'Admin') {
+  if (isEmployee) {
     ComplaintService.getAllComplaints(userId).then((resp) => {
       console.log(resp)
       setComplaints(resp.data);
@@ -124,7 +125,7 @@ const fetchComplaints = ()=>{
                     <span>{complaint.address.addressLine1}, {complaint.address.city}, {complaint.address.state} {complaint.address.pincode}</span>
                   </div>
                   <Badge bg={getStatusBadgeVariant(complaint.status)}>{complaint.status}</Badge>
-                  {user.role === 'Admin' && (
+                  {isEmployee && (
                     <div className="mt-2">
                       <Form.Select
                         onChange={(e) => setNewStatusMap(prevState => ({ ...prevState, [complaint._id]: e.target.value }))}

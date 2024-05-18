@@ -1,13 +1,22 @@
 import userService from '../services/user.service.js';
 import { generateToken } from '../services/auth.service.js';
-import { isAdmin,isCitizen } from '../middleware/middleware.js';
 import { sendEmail } from '../services/email.service.js';
 
 
-const getAllUsers = async (req, res,) => {
+const getAllCitizens = async (req, res,) => {
     console.log('controller');
     try {
         const users = await userService.getAllCitizenUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getAllEmployees = async (req, res,) => {
+    console.log('controller');
+    try {
+        const users = await userService.getAllEmployees();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -86,4 +95,14 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-export {getAllUsers,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile };
+const deleteEmployee = async (req,res)=>{
+    const employeeId = req.params.id;
+    try {
+        const resp = await userService.deleteEmployee(employeeId)
+        res.status(200).json(resp)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+}
+
+export {getAllCitizens, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };

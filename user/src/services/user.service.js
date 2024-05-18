@@ -11,6 +11,16 @@ const getAllCitizenUsers = async () => {
     }
 };
 
+const getAllEmployees = async () => {
+    console.log('service');
+    try {
+        const users = await User.find({ role: 'Employee' });
+        return users;
+    } catch (error) {
+        throw new Error('Failed to fetch employee');
+    }
+};
+
 const getUserById = async (userId) => {
     console.log('service');
     console.log(userId);
@@ -65,9 +75,6 @@ const loginUser = async (credentials) => {
 };
 
 const updateUserProfile = async (userId, updatedData) => {
-    // console.log('service');
-    // console.log(updatedData);
-    // console.log(userId);
     try {
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true });
         if (!user) {
@@ -79,6 +86,20 @@ const updateUserProfile = async (userId, updatedData) => {
     }
 };
 
-const userService = {getAllCitizenUsers,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile };
+const deleteEmployee = async (employeeId) => {
+    User.findByIdAndDelete(employeeId)
+        .then(employee => {
+            if (employee) {
+                res.json({ message: 'Employee deleted successfully' });
+            } else {
+                res.status(404).json({ message: 'Employee not found' });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to delete employee', error: err.message });
+        });
+    }
+
+const userService = {getAllCitizenUsers, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };
 
 export default userService;

@@ -19,22 +19,24 @@ const UserService = {
 
     },
 
-    getUser: async (userId,token) =>{
+    getUser: async (userId, token) => {
         try {
-            const resp = await axios.get(`${BASE_URL}/user/${userId}`,{ headers: {
-                'Authorization': `Bearer ${token}`}
-              })
-              return resp.data;
+            const resp = await axios.get(`${BASE_URL}/user/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            return resp.data;
         } catch (error) {
             throw (error)
         }
-    
+
     },
 
-    forgotPassword: async (username)=>{
+    forgotPassword: async (username) => {
         try {
-            
-            const resp = await axios.post(`${BASE_URL}/get-pass`,username)
+
+            const resp = await axios.post(`${BASE_URL}/get-pass`, username)
 
             return resp
 
@@ -44,9 +46,9 @@ const UserService = {
         }
     },
 
-    registerUser: async (newUser)=>{
+    registerUser: async (newUser) => {
         try {
-            const resp = await axios.post(`${BASE_URL}/register`,newUser)
+            const resp = await axios.post(`${BASE_URL}/register`, newUser)
 
             return resp.data
 
@@ -55,12 +57,14 @@ const UserService = {
             throw (error)
         }
     },
-    
-    updateUser: async (userId,token,updateData)=>{
+
+    updateUser: async (userId, token, updateData) => {
         try {
-            const resp = await axios.put(`${BASE_URL}/user/${userId}`,updateData, { headers: {
-                'Authorization': `Bearer ${token}`},Body: updateData
-              })
+            const resp = await axios.put(`${BASE_URL}/user/${userId}`, updateData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }, Body: updateData
+            })
 
             return resp.data
 

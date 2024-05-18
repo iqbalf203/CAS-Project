@@ -23,9 +23,12 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  designation:{
+    type: String
+  },
   role: {
     type: String,
-    enum: ['Citizen', 'Admin'],
+    enum: ['Citizen', 'Employee'],
     required: true,
     default: 'Citizen'
   },

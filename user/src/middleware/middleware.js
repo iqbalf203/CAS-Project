@@ -1,6 +1,6 @@
 import userService from "../services/user.service.js";
 
-const isAdmin = async (req, res, next) => {
+const isEmployee = async (req, res, next) => {
     let resp;
     try {
         if (req.params && req.params.id) {
@@ -21,7 +21,7 @@ const isAdmin = async (req, res, next) => {
         return res.status(500).json({ message: 'User not found' });
     }
 
-if (resp && resp.role === 'Admin') {
+if (resp && resp.role === 'Employee') {
     next();
 } else {
     res.status(403).json({ message: 'Unauthorized: Admin access required' });
@@ -58,7 +58,7 @@ const isCitizen = async (req, res, next) => {
     }
 };
 
-const isCitizenOrAdmin = async (req, res, next) => {
+const isCitizenOrEmployee = async (req, res, next) => {
     let resp;
     try {
         if (req.params && req.params.id) {
@@ -74,11 +74,11 @@ const isCitizenOrAdmin = async (req, res, next) => {
         return res.status(500).json({ message: 'User not found' });
     }
 
-    if ((resp && resp.role === 'Citizen') || (resp && resp.role === 'Admin')) {
+    if ((resp && resp.role === 'Citizen') || (resp && resp.role === 'Employee')) {
         next(); // User is either a citizen or an admin, proceed to the next middleware or route handler
     } else {
         res.status(403).json({ message: 'Unauthorized: Citizen or Admin access required' });
     }
 };
 
-export { isAdmin, isCitizen, isCitizenOrAdmin };
+export { isEmployee, isCitizen, isCitizenOrEmployee };
