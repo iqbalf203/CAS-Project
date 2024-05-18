@@ -7,6 +7,7 @@ import Profile from './Profile'
 import SignUp from './SignUp'
 import ComplaintForm from './ComplaintForm'
 import ShowComplaint from './ShowComplaint'
+import Home from './Home'
 
 
 const AppRoutes = () => {
@@ -21,7 +22,7 @@ const AppRoutes = () => {
         <NavBar />
         <Routes>
 
-           {/* <Route path='/home' Component={home}></Route> */}
+           <Route path='/home' Component={Home}></Route>
           <Route path='/login' Component={Login}></Route> 
           <Route path='/profile' Component={Profile}></Route>
           <Route path='/signup' Component={SignUp}></Route>
