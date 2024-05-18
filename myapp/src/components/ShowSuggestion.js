@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Container, Row, Col, Modal, Form, ListGroup, Badge, ButtonGroup } from 'react-bootstrap';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import SuggestionService from '../services/SuggestionService';
 import CommentService from '../services/comment.service';
 import { useSelector } from 'react-redux';

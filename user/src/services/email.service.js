@@ -15,13 +15,14 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = (eTo,eSubject,templateName,data)=>{
-
+    console.log(templateName)
     const templateFunction = templates[templateName];
     if (!templateFunction) {
         throw new Error(`Template '${templateName}' not found.`);
     }
-
+    console.log(data)
     const body = templateFunction(data)
+    console.log(body)
     const mailOptions = {
         from: 'fiqbal997@gmail.com',
         to: eTo.email,

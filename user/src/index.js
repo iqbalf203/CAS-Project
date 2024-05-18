@@ -1,7 +1,7 @@
  
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserById, getAllCitizens, getUserByUserName, deleteEmployee, getAllEmployees } from './controllers/user.controller.js';
-import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint, getAllComplaints } from './controllers/complaint.controller.js'
+import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint, getAllComplaints, respondToCitizen } from './controllers/complaint.controller.js'
 import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion, upvoteSuggestion } from './controllers/suggestion.controller.js';
 import {getAllComments, getCommentByCommenterId, getCommentBySuggestionId, createComment, deleteComment} from './controllers/comment.controller.js'
 import './config/db.connection.js';
@@ -41,6 +41,7 @@ app.get('/complaint-by-creatorId/:id', isCitizenOrEmployee,getComplaintByCreator
 app.post('/complaint', isCitizen, createComplaint)
 // app.put('/complaint/:id',isAdmin,updateComplaint)
 app.put('/complaint/:id',updateComplaint)
+app.post('/sendMail',respondToCitizen)
 
 
 // Suggestion requests

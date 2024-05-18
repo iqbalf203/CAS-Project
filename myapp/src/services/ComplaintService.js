@@ -73,6 +73,15 @@ const ComplaintService = {
 
         }
 
+    },
+
+    respondToCitizen: async (data) => {
+        try {
+            const resp = await axios.post(`${BASE_URL}/sendMail`,data)
+            return resp
+        } catch (error) {
+            throw error
+        }
     }
 
 }

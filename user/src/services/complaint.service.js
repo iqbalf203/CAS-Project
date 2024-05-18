@@ -4,9 +4,10 @@ import Complaint from "../models/complaint.model.js";
 const getAllComplaints = async () => {
     console.log('complaint service')
     try {
-        const complaints = await Complaint.find().populate('creator','name')
+        const complaints = await Complaint.find().populate('creator','name email')
         return complaints;
     } catch (error) {
+        console.log(error)
         throw new Error('Failed to fetch complaints');
     }
 };

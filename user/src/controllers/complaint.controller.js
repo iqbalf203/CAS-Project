@@ -65,7 +65,7 @@ const createComplaint = async (req, res) => {
         console.log(req.body)
         const user = await userService.getUserById(req.body.creator)
         console.log(complaint.complaintId)
-        sendEmail(user,'Complaint Registration Confirmation','complaintRegistration', complaint.complaintId)
+        sendEmail(user, 'Complaint Registration Confirmation', 'complaintRegistration', complaint.complaintId)
         res.status(201).json(complaint);
     } catch (error) {
         console.log(error.message)
@@ -77,7 +77,7 @@ const createComplaint = async (req, res) => {
 const updateComplaint = async (req, res) => {
     console.log('controller');
     console.log(req.body);
-    console.log(req.params.id); 
+    console.log(req.params.id);
     const id = req.params.id;
     const updatedData = req.body;
     try {
@@ -88,4 +88,16 @@ const updateComplaint = async (req, res) => {
     }
 };
 
-export {getAllComplaints, getComplaintById,getComplaintByComplaintId, getComplaintByCreatorId, createComplaint, updateComplaint}
+const respondToCitizen = async (req, res) => {
+    try {
+        const data = req.body.user
+        console.log(data)
+        const resp = await sendEmail(data, 'Ref to your complaint', 'respondToCitizen', data.content)
+        res.status(200).json(resp)
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+
+}
+
+export { getAllComplaints, getComplaintById, getComplaintByComplaintId, getComplaintByCreatorId, createComplaint, updateComplaint, respondToCitizen }

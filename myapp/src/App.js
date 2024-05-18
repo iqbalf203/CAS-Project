@@ -3,6 +3,8 @@ import './App.css';
 import AppRoutes from './components/AppRoutes';
 import AdminAppRoutes from './components/admin/AppRoutes';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 function App() {
   return (
