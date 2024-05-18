@@ -40,7 +40,7 @@ const Login = () => {
                 dispatch(setCurrentUser(resp.data.user))
                 dispatch(setToken(resp.data.token))
 
-                navigate('/profile')
+                navigate('/user/profile')
             }
             else {
                 toast.error('Invalid credentials')

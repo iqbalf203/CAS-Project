@@ -41,7 +41,7 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                           <Link className='link-no-underline' to={'/home'}> <button
+                           <Link className='link-no-underline' to={'/user/home'}> <button
                                 className="nav-link"
                                 onClick={() => handleLinkClick('Home')}
                             >
@@ -59,10 +59,10 @@ function NavBar() {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="suggestionsDropdown">
                                 {isCitizen &&<li>
-                                   <Link className='link-no-underline' to={'/submit-suggestion'}> <button className="dropdown-item">Submit Suggestion</button></Link>
+                                   <Link className='link-no-underline' to={'/user/submit-suggestion'}> <button className="dropdown-item">Submit Suggestion</button></Link>
                                 </li>}
                                 {isCitizen && <li>
-                                    <Link className='link-no-underline' to={'/my-suggestions'}><button
+                                    <Link className='link-no-underline' to={'/user/my-suggestions'}><button
                                         className="dropdown-item"
                                         onClick={() => handleLinkClick('MySuggestions')}
                                     >
@@ -70,7 +70,7 @@ function NavBar() {
                                     </button></Link>
                                 </li>}
                                  <li>
-                                <Link className='link-no-underline' to={'/show-suggestion'}> <button className="dropdown-item">All Suggestions</button></Link>
+                                <Link className='link-no-underline' to={'/user/show-suggestion'}> <button className="dropdown-item">All Suggestions</button></Link>
                                 </li>
                             </ul>
                         </li>}
@@ -85,24 +85,24 @@ function NavBar() {
                             </button>
                             <ul className="dropdown-menu" aria-labelledby="complaintsDropdown">
                                 {isCitizen && <li>
-                                   <Link className='link-no-underline' to={'/raise-complaint'}> <button className="dropdown-item">Raise Complaint</button></Link>
+                                   <Link className='link-no-underline' to={'/user/raise-complaint'}> <button className="dropdown-item">Raise Complaint</button></Link>
                                 </li>}
                                 {isCitizen && <li>
-                                   <Link className='link-no-underline' to={'/show-complaint'}> <button className="dropdown-item">My Complaints</button></Link>
+                                   <Link className='link-no-underline' to={'/user/show-complaint'}> <button className="dropdown-item">My Complaints</button></Link>
                                 </li>}
                                 {isEmployee && <li>
-                                <Link className='link-no-underline' to={'/show-complaint'}><button className="dropdown-item" >All Complaints</button></Link>
+                                <Link className='link-no-underline' to={'/user/show-complaint'}><button className="dropdown-item" >All Complaints</button></Link>
                                 </li>}
                             </ul>
                         </li>}
                         {isLoggedIn && <li className="nav-item">
-                            <Link className='link-no-underline' to={'/profile'}><button type='button' className="nav-link">Profile</button></Link>
+                            <Link className='link-no-underline' to={'/user/profile'}><button type='button' className="nav-link">Profile</button></Link>
                         </li>}
                     </ul>
                     <div className="d-flex">
-                        {!isLoggedIn && <Link to={'/login'}><button type="button" className="btn btn-outline-primary me-2">Login</button></Link>}
+                        {!isLoggedIn && <Link to={'/user/login'}><button type="button" className="btn btn-outline-primary me-2">Login</button></Link>}
                         {isLoggedIn && <button type="button" className="btn btn-outline-primary me-2" onClick={logout}>Logout</button>}
-                        {!isLoggedIn && <Link to={'/signup'}><button type="button" className="btn btn-primary me-0">Sign-up</button></Link>}
+                        {!isLoggedIn && <Link to={'/user/signup'}><button type="button" className="btn btn-primary me-0">Sign-up</button></Link>}
                     </div>
                 </div>
             </div>

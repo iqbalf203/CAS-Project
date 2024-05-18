@@ -20,7 +20,7 @@ const AppRoutes = () => {
   return (
     <>
 
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <NavBar />
         <Routes>
 
@@ -36,6 +36,8 @@ const AppRoutes = () => {
           {isLoggedIn && <Route path='/my-suggestions' element={<ShowSuggestion mySuggestion = {true}/>}></Route>}
           {isLoggedIn && <Route path='/logout' Component={Logout}></Route>}
           <Route path='*' Component={Login}></Route>
+          {/* <Route path='/admin' Component={AdminAppRoutes}></Route> */}
+          
 
           {/* {!isLoggedIn && <Route path='/login' element={<Login /> }></Route>}
         <Route path='/dashboard' Component={Dashboard}> </Route>
@@ -49,7 +51,7 @@ const AppRoutes = () => {
         {isLoggedIn && <Route path='/profile' element={<AdminProfile />}></Route>}
         <Route path='/logout' element={<LogOut />}></Route> */}
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </>
   )
 }

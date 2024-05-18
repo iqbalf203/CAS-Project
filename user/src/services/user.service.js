@@ -87,18 +87,15 @@ const updateUserProfile = async (userId, updatedData) => {
 };
 
 const deleteEmployee = async (employeeId) => {
-    User.findByIdAndDelete(employeeId)
-        .then(employee => {
-            if (employee) {
-                res.json({ message: 'Employee deleted successfully' });
-            } else {
-                res.status(404).json({ message: 'Employee not found' });
-            }
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'Failed to delete employee', error: err.message });
-        });
+
+    try {
+        const resp = await User.findByIdAndDelete(employeeId)
+        return resp
+    } catch (error) {
+        throw new Error('Failed to delete employee');
     }
+      
+}
 
 const userService = {getAllCitizenUsers, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };
 
