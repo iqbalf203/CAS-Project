@@ -24,7 +24,7 @@ const SuggestionService = {
 
         getSuggestionByCreatorId: async(creatorId)=>{
             try {
-                const resp = await axios.get(`${BASE_URL}/suggestion-by-id/${creatorId}`)
+                const resp = await axios.get(`${BASE_URL}/suggestion-by-creatorid/${creatorId}`)
                 return resp
             } catch (error) {
                 throw error
@@ -50,7 +50,18 @@ const SuggestionService = {
             } catch (error) {
                 throw error
             }
-        }
+        },
+
+        upvoteSuggestion: async(suggestionId, creatorId)=>{
+
+            try {
+                console.log(suggestionId,creatorId)
+                const resp = await axios.put(`${BASE_URL}/suggestion-upvote/${suggestionId}`,{creator: creatorId})
+                return resp
+            } catch (error) {
+                throw error
+            }
+        } 
 
 
 

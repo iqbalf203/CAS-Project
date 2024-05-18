@@ -2,7 +2,7 @@
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserById, getAllCitizens, getUserByUserName, deleteEmployee, getAllEmployees } from './controllers/user.controller.js';
 import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint, getAllComplaints } from './controllers/complaint.controller.js'
-import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion } from './controllers/suggestion.controller.js';
+import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion, upvoteSuggestion } from './controllers/suggestion.controller.js';
 import {getAllComments, getCommentByCommenterId, getCommentBySuggestionId, createComment, deleteComment} from './controllers/comment.controller.js'
 import './config/db.connection.js';
 import cors from 'cors';
@@ -51,6 +51,7 @@ app.get('/suggestion-by-creatorId/:id', isCitizenOrEmployee,getSuggestionByCreat
 app.post('/suggestion',isCitizen,createSuggestion);
 // app.put('/suggestion/:id',isAdmin, updateSuggestion);
 app.put('/suggestion/:id',updateSuggestion);
+app.put('/suggestion-upvote/:id',isCitizenOrEmployee,upvoteSuggestion)
 
 
 // Comment requests

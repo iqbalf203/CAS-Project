@@ -108,7 +108,7 @@ const fetchComplaints = ()=>{
               <Card>
                 <CardBody>
                 <div>
-                    <CardTitle><strong><span className="fw-bold">Complainant: </span>{complaint.creator.name}</strong></CardTitle>
+                    {isEmployee && <CardTitle><strong><span className="fw-bold">Complainant: </span>{complaint.creator && complaint.creator.name}</strong></CardTitle>}
                   </div>
                   <div>
                     <CardTitle><span className="fw-bold">Title: </span>{complaint.title}</CardTitle>

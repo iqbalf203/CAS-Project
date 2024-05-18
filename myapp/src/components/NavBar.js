@@ -62,12 +62,12 @@ function NavBar() {
                                    <Link className='link-no-underline' to={'/submit-suggestion'}> <button className="dropdown-item">Submit Suggestion</button></Link>
                                 </li>}
                                 {isCitizen && <li>
-                                    <button
+                                    <Link className='link-no-underline' to={'/my-suggestions'}><button
                                         className="dropdown-item"
                                         onClick={() => handleLinkClick('MySuggestions')}
                                     >
                                         My Suggestions
-                                    </button>
+                                    </button></Link>
                                 </li>}
                                  <li>
                                 <Link className='link-no-underline' to={'/show-suggestion'}> <button className="dropdown-item">All Suggestions</button></Link>

@@ -33,6 +33,7 @@ const AppRoutes = () => {
           {isLoggedIn && <Route path='/all-complaints' Component={ShowComplaint}></Route>}
           {isLoggedIn && <Route path='/submit-suggestion' Component={SuggestionForm}></Route>}
           {isLoggedIn && <Route path='/show-suggestion' Component={ShowSuggestion}></Route>}
+          {isLoggedIn && <Route path='/my-suggestions' element={<ShowSuggestion mySuggestion = {true}/>}></Route>}
           {isLoggedIn && <Route path='/logout' Component={Logout}></Route>}
           <Route path='*' Component={Login}></Route>
 

@@ -57,7 +57,7 @@ const createSuggestion = async (req, res) => {
 const updateSuggestion = async (req, res) => {
     console.log('suggestion controller');
     console.log(req.body);
-    console.log(req.params.id); 
+    console.log(req.params.id);
     const suggestionId = req.params.id;
     const updatedData = req.body;
     try {
@@ -69,6 +69,22 @@ const updateSuggestion = async (req, res) => {
     }
 };
 
+const upvoteSuggestion = async (req, res) => {
+    const suggestionId  = req.params.id;
+    const userId = req.body.creator;
+    console.log(userId)
+    try {
+        if(userId){
+        const resp = await suggestionService.upvoteSuggestion(suggestionId, userId)
+        res.status(200).json(resp)
+        }
+        else throw new Error('invalid user id')
+    } catch (error) {
+        console.log(error.message)
+        res.status(400).json({message:error.message})
+    }
+}
 
 
-export {getAllSuggestions,getSuggestionById,getSuggestionByCreator,createSuggestion,updateSuggestion};
+
+export { getAllSuggestions, getSuggestionById, getSuggestionByCreator, createSuggestion, updateSuggestion, upvoteSuggestion };

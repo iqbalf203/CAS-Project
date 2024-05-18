@@ -1,6 +1,7 @@
 import userService from "../services/user.service.js";
 
 const isEmployee = async (req, res, next) => {
+    console.log('middleware')
     let resp;
     try {
         if (req.params && req.params.id) {
@@ -29,6 +30,7 @@ if (resp && resp.role === 'Employee') {
 }
 
 const isCitizen = async (req, res, next) => {
+    console.log('middleware')
     let resp;
     try {
         console.log("===",req.body.creator)
@@ -59,14 +61,20 @@ const isCitizen = async (req, res, next) => {
 };
 
 const isCitizenOrEmployee = async (req, res, next) => {
+    console.log('middleware')
     let resp;
     try {
         if (req.params && req.params.id) {
             resp = await userService.getUserById(req.params.id);
             if (!resp) {
-                return res.status(404).json({ message: 'User not found' });
-            }
+                if(req.body && req.body.creator){
+                    resp = await userService.getUserById(req.body.creator);
+                }
+                else{
+                    return res.status(404).json({ message: 'User not found' });
+                }
         }
+    }
         else {
             resp = req.body;
         }
