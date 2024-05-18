@@ -4,6 +4,17 @@ const BASE_URL = 'http://localhost:3001';
 
 const UserService = {
 
+    getCitizens: async (userId)=>{
+
+        try {
+            const resp = await axios.get(`${BASE_URL}/users/${userId}`)
+            return resp;
+        } catch (error) {
+            throw error;
+        }
+
+    },
+
     login: async (credentials) => {
 
         try {
@@ -70,6 +81,15 @@ const UserService = {
 
         } catch (error) {
 
+            throw (error)
+        }
+    },
+
+    dataCount: async ()=>{
+        try {
+            const resp = await axios.get(`${BASE_URL}/all-data`)
+            return resp.data
+        } catch (error) {
             throw (error)
         }
     }

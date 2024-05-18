@@ -1,3 +1,5 @@
+import Complaint from '../models/complaint.model.js';
+import Suggestion from '../models/suggestion.model.js';
 import User from '../models/user.model.js';
 
 
@@ -97,6 +99,18 @@ const deleteEmployee = async (employeeId) => {
       
 }
 
-const userService = {getAllCitizenUsers, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };
+const counts = async ()=>{
+    let totalData;
+    try {
+        const citizens = await User.countDocuments();
+        const complaints = await Complaint.countDocuments();
+        const suggestions = await Suggestion.countDocuments();
+        return ({citizen: citizens,complaint: complaints,suggestion: suggestions})
+    } catch (error) {
+        throw new Error('Failed to fetch citizen complaint suggestion')
+    }
+}
+
+const userService = {getAllCitizenUsers, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee, counts };
 
 export default userService;

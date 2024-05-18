@@ -1,0 +1,169 @@
+/* Home Appointment */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.home-bg {
+    margin: 0;
+    padding: 0;
+    min-height: 92vh; 
+    width: 100vw;  
+    background-image: url('https://i.ibb.co/HtJgW6B/background-img.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-section {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.book-appointment h2 {
+    color: rgb(65, 65, 65);
+    margin-bottom: .5rem;
+}
+
+.book-appointment h6 {
+    color: grey;
+    margin-bottom: 1.5rem;
+}
+
+.btn-home {
+    width: 60%;
+    /* height: 6vh; */
+}
+
+/* Footer */
+/* footer {
+    color: #fff;
+    width: 100%;
+    background-color: #3593f8; 
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+} */
+
+/* ========================================= */
+
+.bottom-box-container {
+    margin-top: 20rem;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .bottom-box-column {
+    padding: 10px;
+  }
+  
+  .bottom-box {
+    position: relative;
+    height: 250px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    animation: slide-in 0.5s ease-in-out;
+  }
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .bottom-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+  }
+  
+  .box-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .heading {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .caption {
+    font-size: 20px;
+    color: #333;
+  }
+  
+
+  /* Search Box  */
+
+  /* General styles for the container */
+.complaint-status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 20px;
+    margin-bottom: 4rem;
+  }
+  
+  /* Styles for the complaint input */
+  /* Complaint Status Box Styles */
+.complaint-status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust to position the box appropriately */
+  }
+  
+  .complaint-input {
+    width: 300px; /* Adjust width as needed */
+    padding: 10px;
+    border: none;
+    border-radius: 4px 0 0 4px; /* Rounded left side */
+    background-color: #f1f1f1;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .btn-check-status {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 4px 4px 0; /* Rounded right side */
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-check-status:hover {
+    background-color: #0056b3;
+  }
+  
+  .complaint-icon {
+    margin-right: 10px;
+    color: #999;
+    font-size: 18px;
+  }
+  
+  

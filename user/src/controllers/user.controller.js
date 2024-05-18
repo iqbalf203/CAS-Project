@@ -105,4 +105,9 @@ const deleteEmployee = async (req,res)=>{
     }
 }
 
-export {getAllCitizens, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee };
+const getAllCounts = async (req,res)=>{
+    const resp = await userService.counts()
+    res.status(200).json(resp)
+}
+
+export {getAllCitizens, getAllEmployees,getUserById,getUserByUserName, registerUser, loginUser, updateUserProfile, deleteEmployee, getAllCounts };

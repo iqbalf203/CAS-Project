@@ -34,7 +34,7 @@ function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
-                <a className="navbar-brand" href="#">Your Logo</a>
+                <a className="navbar-brand" href="../user/home"><img src='../logo.png' width={'40px'} /></a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -94,6 +94,9 @@ function NavBar() {
                                 <Link className='link-no-underline' to={'/user/show-complaint'}><button className="dropdown-item" >All Complaints</button></Link>
                                 </li>}
                             </ul>
+                        </li>}
+                        {isEmployee && <li className="nav-item">
+                            <Link className='link-no-underline' to={'/user/show-users'}><button type='button' className="nav-link">Citizens</button></Link>
                         </li>}
                         {isLoggedIn && <li className="nav-item">
                             <Link className='link-no-underline' to={'/user/profile'}><button type='button' className="nav-link">Profile</button></Link>

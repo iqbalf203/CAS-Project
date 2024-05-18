@@ -1,6 +1,6 @@
  
 import express from 'express';
-import { registerUser, loginUser, updateUserProfile, getUserById, getAllCitizens, getUserByUserName, deleteEmployee, getAllEmployees } from './controllers/user.controller.js';
+import { registerUser, loginUser, updateUserProfile, getUserById, getAllCitizens, getUserByUserName, deleteEmployee, getAllEmployees, getAllCounts } from './controllers/user.controller.js';
 import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint, getAllComplaints, respondToCitizen } from './controllers/complaint.controller.js'
 import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion, upvoteSuggestion } from './controllers/suggestion.controller.js';
 import {getAllComments, getCommentByCommenterId, getCommentBySuggestionId, createComment, deleteComment} from './controllers/comment.controller.js'
@@ -23,6 +23,7 @@ app.listen(PORT, () => {
 
 // User requests
 // ==============================================================
+app.get('/all-data', getAllCounts)
 app.get('/users/:id', isCitizenOrEmployee, getAllCitizens)
 app.get('/employees', getAllEmployees)
 app.get('/user/:id', isCitizenOrEmployee, getUserById)

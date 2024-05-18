@@ -10,6 +10,8 @@ import ShowComplaint from './ShowComplaint'
 import SuggestionForm from './SuggestionForm'
 import ShowSuggestion from './ShowSuggestion'
 import Logout from './Logout'
+import ShowUser from './ShowUser'
+import Home from './Home'
 
 
 const AppRoutes = () => {
@@ -19,12 +21,10 @@ const AppRoutes = () => {
 
   return (
     <>
-
-      {/* <BrowserRouter> */}
         <NavBar />
         <Routes>
 
-           {/* <Route path='/home' Component={home}></Route> */}
+        <Route path='/home' Component={Home}></Route>
           <Route path='/login' Component={Login}></Route> 
           {isLoggedIn && <Route path='/profile' Component={Profile}></Route>}
           <Route path='/signup' Component={SignUp}></Route>
@@ -36,22 +36,9 @@ const AppRoutes = () => {
           {isLoggedIn && <Route path='/my-suggestions' element={<ShowSuggestion mySuggestion = {true}/>}></Route>}
           {isLoggedIn && <Route path='/logout' Component={Logout}></Route>}
           <Route path='*' Component={Login}></Route>
-          {/* <Route path='/admin' Component={AdminAppRoutes}></Route> */}
+          {isLoggedIn && <Route path='/show-users' Component={ShowUser}></Route>}
           
-
-          {/* {!isLoggedIn && <Route path='/login' element={<Login /> }></Route>}
-        <Route path='/dashboard' Component={Dashboard}> </Route>
-        
-        <Route path='/login' Component={Login}></Route>
-        <Route path='/child' Component={Child}></Route>
-        <Route path='/parent' Component={Parent}></Route>
-        <Route path='*' Component={PageNotFound}></Route>
-        {isLoggedIn && <Route path='/emplist' element={<EmpList />}></Route>}
-        {isLoggedIn && <Route path='/addemp' Component={AddEmp}></Route>}
-        {isLoggedIn && <Route path='/profile' element={<AdminProfile />}></Route>}
-        <Route path='/logout' element={<LogOut />}></Route> */}
         </Routes>
-      {/* </BrowserRouter> */}
     </>
   )
 }
