@@ -10,6 +10,7 @@ import './Home.css'
 import { Link } from 'react-router-dom';
 import ComplaintService from '../services/ComplaintService';
 import UserService from '../services/UserService';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Home = () => {
     const [complaintId, setComplaintId] = useState('');
@@ -34,10 +35,13 @@ const Home = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setShowModal(true)
+        
         ComplaintService.getComplaintByComplaintId(complaintId).then((resp) => {
             console.log(resp)
             setComplaintData(resp.data)
+            setShowModal(true)
+        }).catch((resp)=>{
+            toast.error('Invalid Complaint ID')
         })
 
     }
@@ -135,6 +139,7 @@ const Home = () => {
                 </Modal>
             </Container>
             <Footer />
+            <ToastContainer/>
         </div>
 
     );

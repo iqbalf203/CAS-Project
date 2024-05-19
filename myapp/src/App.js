@@ -12,6 +12,7 @@ function App() {
     <Routes>
        <Route path="/user/*" element={<AppRoutes />} />
         <Route path="/admin/*" element={<AdminAppRoutes />} />
+        <Route path='*' element={<AppRoutes/>}></Route>
     </Routes>
     </BrowserRouter>
   );

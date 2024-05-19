@@ -98,7 +98,7 @@ const Login = () => {
 
 
                                 <a className='text-muted' href='#' onClick={handleShow}><p className="small mb-4 pb-lg-3 text-center">Forgot password?</p></a>
-                                <p className='text-center'>Don't have an account?<Link className='link-no-underline' to={'/signup'}> Register here</Link></p>
+                                <p className='text-center'>Don't have an account?<Link className='link-no-underline' to={'/user/signup'}> Register here</Link></p>
 
 
                             </MDBCardBody>

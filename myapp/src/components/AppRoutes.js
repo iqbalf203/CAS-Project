@@ -35,7 +35,7 @@ const AppRoutes = () => {
           {isLoggedIn && <Route path='/show-suggestion' Component={ShowSuggestion}></Route>}
           {isLoggedIn && <Route path='/my-suggestions' element={<ShowSuggestion mySuggestion = {true}/>}></Route>}
           {isLoggedIn && <Route path='/logout' Component={Logout}></Route>}
-          <Route path='*' Component={Login}></Route>
+          <Route path='*' Component={Home}></Route>
           {isLoggedIn && <Route path='/show-users' Component={ShowUser}></Route>}
           
         </Routes>
