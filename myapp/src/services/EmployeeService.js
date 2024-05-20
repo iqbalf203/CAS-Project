@@ -4,10 +4,13 @@ const BASE_URL = 'http://localhost:3001';
 
 const EmployeeService = {
 
-    getEmployees: async () =>{
+    getEmployees: async (token) =>{
 
         try {
-            const resp = await axios.get(`${BASE_URL}/employees`)
+            const resp = await axios.get(`${BASE_URL}/employees`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }})
             return resp.data;
 
         } catch (error) {
@@ -15,11 +18,14 @@ const EmployeeService = {
         }
     
     },
-    updateEmployee: async (updateData)=>{
+    updateEmployee: async (updateData,token)=>{
 
         try {
             console.log(updateData)
-        const resp = await axios.put(`${BASE_URL}/user/${updateData._id}`,updateData)
+        const resp = await axios.put(`${BASE_URL}/user/${updateData._id}`,updateData,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+        }})
 
         return resp.data
 
@@ -29,10 +35,13 @@ const EmployeeService = {
         }
     },
 
-    deleteEmployee: async (empId)=>{
+    deleteEmployee: async (empId,token)=>{
 
         try {
-                const resp = await axios.delete(`${BASE_URL}/employee/${empId}`)
+                const resp = await axios.delete(`${BASE_URL}/employee/${empId}`,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                }})
                 return resp
 
         } catch (error) {
@@ -40,10 +49,13 @@ const EmployeeService = {
             throw new Error("Failed to Delete");
         }
     },
-    addEmployee: async (employee)=>{
+    addEmployee: async (employee,token)=>{
 
         try {
-                const resp = await axios.post(`${BASE_URL}/register`,employee)
+                const resp = await axios.post(`${BASE_URL}/register`,employee,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                }})
                 console.log(resp);
                 return resp.data
 

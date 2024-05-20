@@ -9,6 +9,7 @@ const ShowUser = () => {
     const [citizens, setCitizens] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [filteredCitizens, setFilteredCitizens] = useState([])
+    const token = useSelector(obj=>obj.user.token);
 
     useEffect(() => {
     fetchCitizens()
@@ -16,7 +17,7 @@ const ShowUser = () => {
     
 
     const fetchCitizens = ()=>{
-        UserService.getCitizens(userId).then((resp)=>{
+        UserService.getCitizens(userId,token).then((resp)=>{
             setCitizens(resp.data)
             setFilteredCitizens(resp.data)
         })

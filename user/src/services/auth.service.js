@@ -5,8 +5,14 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 
 const authenticateJWT = (req, res, next) => {
     console.log('authenticateJWT');
-    if (req.path === '/register' || req.path === '/login')
+    if (req.path === '/register' || req.path === '/login'
+        || req.path === '/get-pass' || req.path === '/all-data'
+        || req.path.startsWith('/complaint-by-complaintId/'))
+        
+    {
         return next();
+    }
+
 
     const bearerToken = req.headers.authorization;
     let token = '';

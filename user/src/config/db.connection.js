@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
 const connectionString = 'mongodb://localhost:27017';
+// const connectionString = process.env.ATLAS_PASSWORD;
+
 const databaseName = 'ibm_project';
 
 mongoose.connect(`${connectionString}/${databaseName}`)

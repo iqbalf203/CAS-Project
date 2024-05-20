@@ -4,10 +4,14 @@ const BASE_URL = 'http://localhost:3001';
 
 const UserService = {
 
-    getCitizens: async (userId)=>{
+    getCitizens: async (userId,token)=>{
 
         try {
-            const resp = await axios.get(`${BASE_URL}/users/${userId}`)
+            const resp = await axios.get(`${BASE_URL}/users/${userId}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+        }
+    })
             return resp;
         } catch (error) {
             throw error;

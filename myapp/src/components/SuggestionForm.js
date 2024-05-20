@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const SuggestionForm = () => {
     const userId = useSelector(store => store.user.currentUser._id);
+    const token = useSelector(obj=>obj.user.token);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -25,7 +26,7 @@ const SuggestionForm = () => {
         console.log('Form data:', formData);
         const newFormData = { ...formData, creator: userId };
         try {
-           const resp = await SuggestionService.createSuggestion(newFormData);
+           const resp = await SuggestionService.createSuggestion(newFormData,token);
            console.log(resp)
             if(resp.status===201){
                 toast.success('Suggestion submitted')

@@ -3,45 +3,60 @@ import axios from "axios";
 const BASE_URL = 'http://localhost:3001';
 
 const CommentService = {
-    getAllComments: async () => {
+    getAllComments: async (token) => {
         try {
-            const resp = await axios.get(`${BASE_URL}/comments`);
+            const resp = await axios.get(`${BASE_URL}/comments`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }});
             return resp.data;
         } catch (error) {
             throw error;
         }
     },
 
-    getCommentsByCommenterId: async (commenterId) => {
+    getCommentsByCommenterId: async (commenterId,token) => {
         try {
-            const resp = await axios.get(`${BASE_URL}/comments/commenter/${commenterId}`);
+            const resp = await axios.get(`${BASE_URL}/comments/commenter/${commenterId}`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }});
             return resp.data;
         } catch (error) {
             throw error;
         }
     },
 
-    getCommentsBySuggestionId: async (suggestionId) => {
+    getCommentsBySuggestionId: async (suggestionId,token) => {
         try {
-            const resp = await axios.get(`${BASE_URL}/comments/suggestion/${suggestionId}`);
+            const resp = await axios.get(`${BASE_URL}/comments/suggestion/${suggestionId}`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }});
             return resp.data;
         } catch (error) {
             throw error;
         }
     },
 
-    createComment: async (commentData) => {
+    createComment: async (commentData,token) => {
         try {
-            const resp = await axios.post(`${BASE_URL}/comment`, commentData);
+            const resp = await axios.post(`${BASE_URL}/comment`, commentData,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }});
             return resp.data;
         } catch (error) {
             throw error;
         }
     },
 
-    deleteComment: async (commentId) => {
+    deleteComment: async (commentId,token) => {
         try {
-            const resp = await axios.delete(`${BASE_URL}/comment/${commentId}`);
+            const resp = await axios.delete(`${BASE_URL}/comment/${commentId}`,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+            }});
             return resp.data;
         } catch (error) {
             throw error;

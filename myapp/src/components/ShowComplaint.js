@@ -15,6 +15,7 @@ const ShowComplaint = () => {
   const complaintTypes = ['Noise', 'Road Maintenance', 'Waste Management', 'Public Safety', 'Infrastructure', 'Environmental', 'Building Code', 'Traffic'];
   const [selectedType, setSelectedType] = useState('');
   const user = useSelector(store => store.user.currentUser);
+  const token = useSelector(obj=>obj.user.token);
   const userId = user._id;
   const isEmployee = user.role === 'Employee';
 
@@ -24,7 +25,7 @@ const ShowComplaint = () => {
 
   const fetchComplaints = () => {
     if (isEmployee) {
-      ComplaintService.getAllComplaints(userId).then((resp) => {
+      ComplaintService.getAllComplaints(userId,token).then((resp) => {
         console.log(resp);
         setComplaints(resp.data);
         setFilteredComplaints(resp.data); // Initially set filtered complaints to all complaints
@@ -32,7 +33,7 @@ const ShowComplaint = () => {
         console.log(error);
       });
     } else {
-      ComplaintService.getComplaintByCreatorId(userId).then((resp) => {
+      ComplaintService.getComplaintByCreatorId(userId,token).then((resp) => {
         console.log(resp.data);
         setComplaints(resp.data);
         setFilteredComplaints(resp.data); // Initially set filtered complaints to all complaints
@@ -80,7 +81,7 @@ const ShowComplaint = () => {
   const handleStatusChange = (complaintId) => {
 
       const newStatus = newStatusMap[complaintId];
-      ComplaintService.updateComplaint(complaintId, { 'status': newStatus }).then((resp)=>{
+      ComplaintService.updateComplaint(complaintId, { 'status': newStatus },token).then((resp)=>{
         fetchComplaints();
         setNewStatusMap(prevState => ({ ...prevState, [complaintId]: undefined }));
         toast.success('Status Updated')
@@ -98,7 +99,8 @@ const ShowComplaint = () => {
 
   const handleEmailSend = () => {
     setShowModal(false);
-    ComplaintService.respondToCitizen({user:{email: selectedComplaint.creator.email,content:emailContent}}).then((rep)=>{
+    ComplaintService.respondToCitizen({user:{email: selectedComplaint.creator.email,content:emailContent}},token)
+    .then((rep)=>{
       console.log('Sending email:', emailContent, 'to', selectedComplaint.creator.email);
       toast.success('Mail Sent')
       setEmailContent('');

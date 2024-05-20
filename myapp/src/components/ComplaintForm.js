@@ -8,6 +8,7 @@ const complaintTypes = ['Noise', 'Road Maintenance', 'Waste Management', 'Public
 const ComplaintForm = ()=> {
 
   const userId = useSelector(store=>store.user.currentUser._id)
+  const token = useSelector(obj=>obj.user.token);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -47,7 +48,7 @@ let newFormData;
     console.log("Id from complaint form-",userId)
     newFormData = {...formData,'creator': userId}
     try {
-      const complaint = await ComplaintService.createComplaint(newFormData)
+      const complaint = await ComplaintService.createComplaint(newFormData,token)
       if(complaint.status===201){
         setFormData({
           title: '',

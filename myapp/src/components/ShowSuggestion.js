@@ -16,6 +16,7 @@ const ShowSuggestion = (props) => {
     const [modalCommentInput, setModalCommentInput] = useState('');
     const [showCommentBox, setShowCommentBox] = useState({});
     const user = useSelector(store => store.user.currentUser);
+    const token = useSelector(obj=>obj.user.token);
     const userId = user._id;
     const isEmployee = user.role === 'Employee';
     const [newStatus, setNewStatus] = useState('');
@@ -31,7 +32,7 @@ const ShowSuggestion = (props) => {
 
     const handleStatusChange = async (suggestionId) => {
         try {
-            await SuggestionService.updateSuggestion(suggestionId, { 'status': newStatus });
+            await SuggestionService.updateSuggestion(suggestionId, { 'status': newStatus },token);
             fetchSuggestions(); // Refresh suggestions after updating status
             toast.success('Status Updated')
             setNewStatus('');
@@ -45,9 +46,9 @@ const ShowSuggestion = (props) => {
         let response;
         try {
             if (mySuggestion) {
-                response = await SuggestionService.getSuggestionByCreatorId(userId);
+                response = await SuggestionService.getSuggestionByCreatorId(userId,token);
             } else {
-                response = await SuggestionService.getAllSuggestions();
+                response = await SuggestionService.getAllSuggestions(token);
             }
             setSuggestions(response.data);
         } catch (error) {
@@ -57,7 +58,7 @@ const ShowSuggestion = (props) => {
 
     const fetchComments = async (suggestionId) => {
         try {
-            const response = await CommentService.getCommentsBySuggestionId(suggestionId);
+            const response = await CommentService.getCommentsBySuggestionId(suggestionId,token);
             setComments(prevComments => ({ ...prevComments, [suggestionId]: response }));
         } catch (error) {
             console.error('Error fetching comments:', error);
@@ -94,7 +95,7 @@ const ShowSuggestion = (props) => {
                 creator: userId,
                 suggestion: suggestionId
             };
-            await CommentService.createComment(newComment);
+            await CommentService.createComment(newComment,token);
             fetchComments(suggestionId); // Refresh comments after posting
             setCommentInput('');
             setShowCommentBox(prevState => ({ ...prevState, [suggestionId]: false })); // Hide the comment box after posting
@@ -111,7 +112,7 @@ const ShowSuggestion = (props) => {
                 creator: userId,
                 suggestion: suggestionId
             };
-            await CommentService.createComment(newComment);
+            await CommentService.createComment(newComment,token);
             fetchComments(suggestionId); // Refresh comments after posting
             setModalCommentInput('');
         } catch (error) {
@@ -121,7 +122,7 @@ const ShowSuggestion = (props) => {
 
     const handleDeleteComment = async (commentId, suggestionId) => {
         try {
-            await CommentService.deleteComment(commentId);
+            await CommentService.deleteComment(commentId,token);
             fetchComments(suggestionId);
         } catch (error) {
             console.error('Error deleting comment:', error);
@@ -157,7 +158,7 @@ const ShowSuggestion = (props) => {
     const handleUpvote = async (suggestionId) => {
         try {
             console.log(suggestionId, userId);
-            await SuggestionService.upvoteSuggestion(suggestionId, userId);
+            await SuggestionService.upvoteSuggestion(suggestionId, userId,token);
             fetchSuggestions(); // Refresh suggestions after upvoting
         } catch (error) {
             console.error('Error upvoting suggestion:', error);
