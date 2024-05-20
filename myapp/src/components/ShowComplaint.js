@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardBody, CardTitle, CardText, Badge, Col, ButtonGroup, Button, Form, Modal } from 'react-bootstrap';
 import ComplaintService from '../services/ComplaintService';
 import { useSelector } from 'react-redux';
+import { toast,ToastContainer } from 'react-toastify';
 
 const ShowComplaint = () => {
   
@@ -76,15 +77,18 @@ const ShowComplaint = () => {
     }
   };
 
-  const handleStatusChange = async (complaintId) => {
-    try {
+  const handleStatusChange = (complaintId) => {
+
       const newStatus = newStatusMap[complaintId];
-      await ComplaintService.updateComplaint(complaintId, { 'status': newStatus });
-      fetchComplaints();
-      setNewStatusMap(prevState => ({ ...prevState, [complaintId]: undefined }));
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
+      ComplaintService.updateComplaint(complaintId, { 'status': newStatus }).then((resp)=>{
+        fetchComplaints();
+        setNewStatusMap(prevState => ({ ...prevState, [complaintId]: undefined }));
+        toast.success('Status Updated')
+      }).catch((error)=>{
+        console.error('Error updating status:', error);
+        toast.error('Failed to Update')
+      })
+    
   };
 
   const handleEmailClick = (complaint) => {
@@ -93,10 +97,15 @@ const ShowComplaint = () => {
   };
 
   const handleEmailSend = () => {
-    ComplaintService.respondToCitizen({user:{email: selectedComplaint.creator.email,content:emailContent}})
-    console.log('Sending email:', emailContent, 'to', selectedComplaint.creator.email);
     setShowModal(false);
-    setEmailContent('');
+    ComplaintService.respondToCitizen({user:{email: selectedComplaint.creator.email,content:emailContent}}).then((rep)=>{
+      console.log('Sending email:', emailContent, 'to', selectedComplaint.creator.email);
+      toast.success('Mail Sent')
+      setEmailContent('');
+    }).catch((error)=>{
+      toast.error(error.message);
+    })
+   
   };
 
   return (
@@ -182,6 +191,7 @@ const ShowComplaint = () => {
           <Button variant="primary" onClick={handleEmailSend}>Send Email</Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer/>
     </>
   );
 };

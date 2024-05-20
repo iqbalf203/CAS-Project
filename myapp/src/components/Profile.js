@@ -47,6 +47,7 @@ const Profile = () => {
 
     UserService.updateUser(userData._id,token,updateData).then((resp)=>{
       setUserData({...userData,...updateData})
+      toast.success('User Updated')
     }).catch((error)=>{
       toast.error(error.response.data.message)
     })

@@ -51,6 +51,7 @@ const EmpList = () => {
 
   const handleInputChange = (event) => {
     setUpdateData({ ...updateData, [event.target.name]: event.target.value })
+    console.log(updateData)
   }
 
   const handleSubmit = () => {
@@ -150,15 +151,15 @@ const EmpList = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="salary">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" name="salary" value={updateData.username} onChange={handleInputChange} />
+              <Form.Control type="text" name="username" value={updateData.username} onChange={handleInputChange} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="aadhaar">
               <Form.Label>Phone</Form.Label>
-              <Form.Control type="text" name="aadhaar" value={updateData.phone} onChange={handleInputChange} />
+              <Form.Control type="text" name="phone" value={updateData.phone} onChange={handleInputChange} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="aadhaar">
               <Form.Label>Designation</Form.Label>
-              <Form.Control type="text" name="aadhaar" value={updateData.designation} onChange={handleInputChange} />
+              <Form.Control type="text" name="designation" value={updateData.designation} onChange={handleInputChange} />
             </Form.Group>
           </Form>
         </Modal.Body>

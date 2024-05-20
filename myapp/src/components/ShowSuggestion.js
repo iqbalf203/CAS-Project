@@ -3,6 +3,7 @@ import { Card, Button, Container, Row, Col, Modal, Form, ListGroup, Badge, Butto
 import SuggestionService from '../services/SuggestionService';
 import CommentService from '../services/comment.service';
 import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 import './ShowSuggestion.css';
 
 const ShowSuggestion = (props) => {
@@ -32,9 +33,11 @@ const ShowSuggestion = (props) => {
         try {
             await SuggestionService.updateSuggestion(suggestionId, { 'status': newStatus });
             fetchSuggestions(); // Refresh suggestions after updating status
+            toast.success('Status Updated')
             setNewStatus('');
         } catch (error) {
             console.error('Error updating status:', error);
+            toast.error('Failed to Update')
         }
     };
 
@@ -293,6 +296,7 @@ const ShowSuggestion = (props) => {
                     </Modal.Body>
                 </Modal>
             </Container>
+            <ToastContainer/>
         </>
     );
 };

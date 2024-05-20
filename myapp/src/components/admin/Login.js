@@ -60,16 +60,18 @@ function AdminLogin(props) {
   }
 
   return (
-    <MDBContainer className="my-5 gradient-form">
+    <MDBContainer className="my-5 gradient-form custom-bg">
 
       <MDBRow>
 
         <MDBCol col='6' className="mb-5">
-          <div className="d-flex flex-column ms-5">
+          <form onSubmit={handleSubmit}>
+          <div className="d-flex flex-column ms-5 mt-5">
 
             <div className="text-center">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/2560px-IBM_logo.svg.png"
-                style={{width: '185px'}} alt="logo" />
+              {/* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/2560px-IBM_logo.svg.png"
+                style={{width: '185px'}} alt="logo" /> */}
+                <h1>Admin Login</h1>
               <h4 className="mt-1 mb-5 pb-1"> </h4>
             </div>
 
@@ -81,9 +83,10 @@ function AdminLogin(props) {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn className="mb-4 w-100 gradient-custom-2" onClick={handleSubmit}>Log In</MDBBtn>
+              <MDBBtn type='submit' className="mb-4 w-100 gradient-custom-2" onClick={handleSubmit}>Log In</MDBBtn>
           </div>
           </div>
+          </form>
 
         </MDBCol>
 
