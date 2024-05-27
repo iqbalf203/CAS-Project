@@ -12,7 +12,7 @@ import { authenticateJWT } from './services/auth.service.js';
 const app = express();
 app.use(cors()); 
 app.use(express.json());
-app.use(authenticateJWT); 
+// app.use(authenticateJWT);
 
 const PORT = process.env.PORT || 3001;
 
@@ -30,7 +30,7 @@ app.get('/user/:id', isCitizenOrEmployee, getUserById)
 app.post('/get-pass',getUserByUserName)
 app.post('/register', registerUser);
 app.post('/login', loginUser);
-app.put('/user/:id',isCitizenOrEmployee, updateUserProfile);
+app.put('/user/:id', updateUserProfile);
 app.delete('/employee/:id',deleteEmployee)
 
 

@@ -5,19 +5,15 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-
   MDBCheckbox,
- 
 } from "mdb-react-ui-kit";
 import "./SignUp.css";
 import UserService from "../services/UserService";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Popover, OverlayTrigger } from "react-bootstrap";
-
 function SignUp() {
   const navigate = useNavigate();
-
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -25,38 +21,39 @@ function SignUp() {
     phone: "",
     password: "",
   });
-
   const [validationErrors, setValidationErrors] = useState({});
-
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
   const handleSubmit = async () => {
     const allFieldsValid = !Object.keys(validationErrors).length; // Check if all fields are valid
-
-    if (allFieldsValid) {
+    if (allFieldsValid && isTermsChecked) {
       try {
-        await UserService.registerUser(newUser);
+        const resp = await UserService.registerUser(newUser);
         console.log("registered");
         toast.success(`${newUser.username} is registered!`);
         setTimeout(() => {
           navigate("/login");
-        }, 2000);
+        }, 1000);
       } catch (error) {
+        if (error.response.status == 400){
+          toast.error('Username already exist!')
+        }
         console.error("error in registering", error);
       }
     } else {
       console.warn("Form submission prevented due to validation errors.");
     }
   };
-
   const handleChange = (event) => {
     setNewUser({ ...newUser, [event.target.name]: event.target.value });
     setValidationErrors({
       ...validateField(event.target.name, event.target.value),
     });
   };
-
+  const handleCheckboxChange = (event) => {
+    setIsTermsChecked(event.target.checked);
+  };
   const validateField = (fieldName, fieldValue) => {
     const errors = {};
-
     switch (fieldName) {
       case "name":
         if (!fieldValue) {
@@ -77,7 +74,6 @@ function SignUp() {
           errors.email = "Please enter a valid email address.";
         }
         break;
-
       case "username":
         if (!fieldValue) {
           errors.username = "Please enter a username.";
@@ -108,7 +104,6 @@ function SignUp() {
             }
           }
         }
-
         break;
       case "phone":
         if (!fieldValue) {
@@ -117,7 +112,6 @@ function SignUp() {
           errors.phone = "Please enter a valid phone number.";
         }
         break;
-
       case "password":
         const password = fieldValue;
         const hasUppercase = /[A-Z]/.test(password);
@@ -126,7 +120,6 @@ function SignUp() {
         const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(
           password
         );
-
         if (password) {
           if (!hasUppercase) {
             errors.password = errors.password
@@ -154,9 +147,7 @@ function SignUp() {
               : "Password must be at least 8 characters long.";
           }
         }
-
         break;
-
       case "repeatPass":
         if (!fieldValue) {
           errors.repeatPass = "Please confirm your password.";
@@ -167,10 +158,8 @@ function SignUp() {
       default:
         break;
     }
-
     return errors;
   };
-
   const renderPopoverContent = (fieldName) => (
     <Popover id={`popover-${fieldName}`}>
       {/* <Popover.Header as="h3">{fieldName}</Popover.Header> */}
@@ -178,7 +167,6 @@ function SignUp() {
       {validationErrors[fieldName]}
     </Popover>
   );
-
   return (
     <>
       <MDBContainer
@@ -212,7 +200,6 @@ function SignUp() {
                 validationState={validationErrors.name ? "invalid" : "valid"}
               />
             </OverlayTrigger>
-
             <OverlayTrigger
               trigger="focus"
               placement="right"
@@ -229,7 +216,6 @@ function SignUp() {
                 onChange={handleChange}
               />
             </OverlayTrigger>
-
             <OverlayTrigger
               trigger="focus"
               placement="right"
@@ -246,7 +232,6 @@ function SignUp() {
                 onChange={handleChange}
               />
             </OverlayTrigger>
-
             <OverlayTrigger
               trigger="focus"
               placement="right"
@@ -264,7 +249,6 @@ function SignUp() {
                 onChange={handleChange}
               />
             </OverlayTrigger>
-
             <OverlayTrigger
               trigger="focus"
               placement="right"
@@ -281,7 +265,6 @@ function SignUp() {
                 onChange={handleChange}
               />
             </OverlayTrigger>
-
             <OverlayTrigger
               trigger="focus"
               placement="right"
@@ -297,12 +280,13 @@ function SignUp() {
                 onChange={handleChange}
               />
             </OverlayTrigger>
-
             <div className="d-flex flex-row justify-content-center mb-4">
               <MDBCheckbox
                 name="flexCheck"
                 id="flexCheckDefault"
                 label="I agree to all statements in Terms of service"
+                checked={isTermsChecked}
+                onChange={handleCheckboxChange}
               />
             </div>
             <br />
@@ -311,6 +295,9 @@ function SignUp() {
               color="info"
               size="lg"
               onClick={handleSubmit}
+              disabled={
+                !isTermsChecked || !!Object.keys(validationErrors).length
+              }
             >
               Register
             </MDBBtn>
@@ -321,5 +308,4 @@ function SignUp() {
     </>
   );
 }
-
 export default SignUp;

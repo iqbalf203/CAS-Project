@@ -7,7 +7,10 @@ const authenticateJWT = (req, res, next) => {
     console.log('authenticateJWT');
     if (req.path === '/register' || req.path === '/login'
         || req.path === '/get-pass' || req.path === '/all-data'
-        || req.path.startsWith('/complaint-by-complaintId/'))
+        || req.path.startsWith('/complaint-by-complaintId/')
+        || req.path === '/employee/:id'
+        || req.path === '/user/:id'
+        || req.path === '/employees')
         
     {
         return next();
