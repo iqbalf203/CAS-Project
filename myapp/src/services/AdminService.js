@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8090';
+const BASE_URL = process.env.REACT_APP_SPRING_BASE_URL;
 
 const AdminService =  {
 
@@ -8,7 +8,7 @@ const AdminService =  {
 
         try {
             
-            const response = await axios.post('http://localhost:8090/admin/login', credentials);
+            const response = await axios.post(`${BASE_URL}/admin/login`, credentials);
             return response
 
         } catch (error) {
