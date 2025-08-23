@@ -9,7 +9,7 @@ html, body {
     margin: 0;
     padding: 0;
     min-height: 92vh; 
-    width: 100vw;  
+    width: 100%;  
     background-image: url('https://i.ibb.co/HtJgW6B/background-img.jpg');
     background-size: cover;
     background-position: center;
