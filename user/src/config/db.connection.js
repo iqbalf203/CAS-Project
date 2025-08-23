@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
 
-const connectionString = 'mongodb://localhost:27017';
-// const connectionString = process.env.ATLAS_PASSWORD;
+// const connectionString = 'mongodb://localhost:27017';
+const connectionString = process.env.CAS_MONGO_URL;
 
-const databaseName = 'ibm_project';
-
-mongoose.connect(`${connectionString}/${databaseName}`)
+mongoose.connect(connectionString)
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Error connecting to MongoDB:', err));
