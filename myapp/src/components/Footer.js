@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const footerStyle = {
@@ -45,8 +46,9 @@ const Footer = () => {
       <div style={sectionStyle}>
         <div style={logoStyle}>
           <img src="../logo.png" alt="Bequant Logo" style={logoImgStyle} /> {/* Replace with your actual logo */}
-          <p>City Administration Systemt</p>
+          <p>City Administration System</p>
           <p>Empowering cities with seamless governance solutions, transforming administration into efficiency and excellence</p>
+          <p>For <Link to="/admin">Admins</Link></p>
         </div>
       </div>
       <div style={bottomStyle}>
