@@ -38,7 +38,10 @@ const getUserByUserName = async (username) => {
     console.log('service');
     console.log(username);
     try {
-        const user = await User.findOne({ username });
+        if (typeof username !== 'string') {
+            throw new Error('Invalid username type');
+        }
+        const user = await User.findOne({ username: { $eq: username } });
         return user;
     } catch (error) {
         throw new Error('Failed to fetch user by ID');
