@@ -24,7 +24,7 @@ const sendEmail = (eTo,eSubject,templateName,data)=>{
     const body = templateFunction(data)
     console.log(body)
     const mailOptions = {
-        from: 'fiqbal997@gmail.com',
+        from: '"System" <no-reply@example.com>',
         to: eTo.email,
         subject: eSubject,
         html: body
