@@ -1,5 +1,6 @@
  
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { registerUser, loginUser, updateUserProfile, getUserById, getAllCitizens, getUserByUserName, deleteEmployee, getAllEmployees, getAllCounts } from './controllers/user.controller.js';
 import { createComplaint,getComplaintByCreatorId,getComplaintByComplaintId,updateComplaint, getAllComplaints, respondToCitizen } from './controllers/complaint.controller.js'
 import { createSuggestion, getAllSuggestions, getSuggestionByCreator, getSuggestionById, updateSuggestion, upvoteSuggestion } from './controllers/suggestion.controller.js';
@@ -13,6 +14,13 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 app.use(authenticateJWT);
+
+// Rate limiter for login route
+const loginLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute window
+    max: 5, // limit each IP to 5 requests per windowMs
+    message: "Too many login attempts from this IP, please try again later."
+});
 
 const PORT = process.env.PORT || 3001;
 
@@ -29,7 +37,7 @@ app.get('/employees', getAllEmployees)
 app.get('/user/:id', isCitizenOrEmployee, getUserById)
 app.post('/get-pass',getUserByUserName)
 app.post('/register', registerUser);
-app.post('/login', loginUser);
+app.post('/login', loginLimiter, loginUser);
 app.put('/user/:id', updateUserProfile);
 app.delete('/employee/:id',deleteEmployee)
 
