@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import ComplaintService from '../services/ComplaintService';
 import UserService from '../services/UserService';
 import { toast, ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
 
@@ -19,6 +20,7 @@ const Home = () => {
     const [dataCount, setDataCount] = useState({});
 
     const [showModal, setShowModal] = useState(false);
+    const isLoggedIn = useSelector(store=>store.user.isLoggedIn)
 
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
@@ -86,9 +88,11 @@ const Home = () => {
                         </button>
                     </form>
                 </div>
+                { !isLoggedIn && 
                 <Link to="/user/login" className="nav-link">
                     <button type="button" className="btn btn-outline-primary btn-home">Login</button>
-                </Link>
+                </Link> 
+                }
             </div>
 
             <Container fluid className="bottom-box-container">

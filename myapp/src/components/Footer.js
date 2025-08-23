@@ -8,6 +8,7 @@ const Footer = () => {
     color: '#ffffff',
     padding: '10px 20px', // Reduced padding
     justifyContent: 'space-between',
+    width: "100%"
   };
 
   const sectionStyle = {
@@ -22,6 +23,7 @@ const Footer = () => {
   const logoStyle = {
     display: 'flex',
     flexDirection: 'column',
+    width: "100%"
   };
 
   const logoImgStyle = {
@@ -38,45 +40,6 @@ const Footer = () => {
     paddingTop: '10px',
   };
 
-  const headerStyle = {
-    marginBottom: '15px', // Increased margin
-    fontSize: '1.1em',
-    fontWeight: 'bold',
-    textAlign: 'center', // Center the text
-  };
-
-  const listStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    listStyleType: 'none',
-    padding: 0,
-    justifyContent: 'center', // Center the items
-    textAlign: 'center', // Center the text
-  };
-
-  const listItemStyle = {
-    flex: '1 1 calc(30% - 20px)', // Adjust the flex basis for three members in the first row
-    maxWidth: 'calc(33.33% - 20px)', // Ensures each item takes up about one-third of the container width
-    minWidth: '150px', // Reduced min-width
-    marginBottom: '20px', // Increased margin
-  };
-
-  const listItemStyleWide = {
-    flex: '1 1 calc(45% - 10px)', // Adjust the flex basis for two members in the second row and decreased gap
-    maxWidth: 'calc(50% - 10px)', // Ensures each item takes up about half of the container width with decreased gap
-    minWidth: '150px', // Reduced min-width
-    marginBottom: '10px', // Reduced margin
-  };
-
-  const teamMemberNameStyle = {
-    fontSize: '1em', // Reduced font size
-    fontWeight: 'bold',
-  };
-
-  const teamMemberDetailStyle = {
-    fontSize: '0.85em', // Reduced font size
-  };
-
   return (
     <div style={footerStyle}>
       <div style={sectionStyle}>
@@ -85,38 +48,6 @@ const Footer = () => {
           <p>City Administration Systemt</p>
           <p>Empowering cities with seamless governance solutions, transforming administration into efficiency and excellence</p>
         </div>
-      </div>
-      <div style={sectionStyle}>
-        <h4 style={headerStyle}>TEAM MEMBERS</h4>
-        <ul style={listStyle}>
-          {/* First row with three members */}
-          <li style={listItemStyle}>
-            <p style={teamMemberNameStyle}>Faisal Iqbal</p>
-            <p style={teamMemberDetailStyle}>Faisal@gmail.com</p>
-            <p style={teamMemberDetailStyle}>123-456-7890</p>
-          </li>
-          <li style={listItemStyle}>
-            <p style={teamMemberNameStyle}>Yuvraj J R</p>
-            <p style={teamMemberDetailStyle}>Yuvraj@gmail.com</p>
-            <p style={teamMemberDetailStyle}>098-765-4321</p>
-          </li>
-          <li style={listItemStyle}>
-            <p style={teamMemberNameStyle}>Yashank U</p>
-            <p style={teamMemberDetailStyle}>Yashank@gmail.com</p>
-            <p style={teamMemberDetailStyle}>456-789-0123</p>
-          </li>
-          {/* Second row with two members */}
-          <li style={listItemStyleWide}>
-            <p style={teamMemberNameStyle}>Vishnu Kaku</p>
-            <p style={teamMemberDetailStyle}>Vishnu@gmail.com</p>
-            <p style={teamMemberDetailStyle}>321-654-9870</p>
-          </li>
-          <li style={listItemStyleWide}>
-            <p style={teamMemberNameStyle}>Vishesh Pancholi</p>
-            <p style={teamMemberDetailStyle}>Vishesh@gmail.com</p>
-            <p style={teamMemberDetailStyle}>789-012-3456</p>
-          </li>
-        </ul>
       </div>
       <div style={bottomStyle}>
         <p>Documentation</p>
