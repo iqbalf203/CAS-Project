@@ -4,62 +4,77 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # allow manual runs
+  workflow_dispatch:  # allow manual trigger
 
 jobs:
-  deploy:
+  deploy-myapp:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Trigger Render Deploy
-        id: trigger
+      - name: Trigger Render Deploy (MYAPP)
         run: |
-          echo "Triggering deploy on Render..."
+          echo "🚀 Deploying MYAPP..."
           RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys)
+            https://api.render.com/v1/services/${{ secrets.RENDER_MYAPP_ID }}/deploys)
 
           echo "Raw trigger response: $RESPONSE"
 
           DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
-
           if [ -z "$DEPLOY_ID" ]; then
-            echo "❌ Failed to get deploy ID"
+            echo "❌ Failed to get deploy ID for MYAPP"
             exit 1
           fi
 
-          echo "Got deploy ID: $DEPLOY_ID"
-
-          # Expose deploy id for next steps
+          echo "Got deploy ID for MYAPP: $DEPLOY_ID"
           echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
 
-      - name: Wait for Render Deploy
+  deploy-user:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Trigger Render Deploy (USER)
         run: |
-          echo "Polling deploy status for ID: $DEPLOY_ID"
-          for i in {1..30}; do
-            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID)
+          echo "🚀 Deploying USER..."
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_USER_ID }}/deploys)
 
-            echo "Raw status response: $RESPONSE"
+          echo "Raw trigger response: $RESPONSE"
 
-            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
-            echo "Current status: $STATUS"
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID for USER"
+            exit 1
+          fi
 
-            if [ "$STATUS" = "live" ]; then
-              echo "✅ Deploy is live!"
-              exit 0
-            elif [ "$STATUS" = "failed" ]; then
-              echo "❌ Deploy failed!"
-              exit 1
-            elif [ "$STATUS" = "unknown" ]; then
-              echo "⚠️ API returned unexpected response"
-            fi
+          echo "Got deploy ID for USER: $DEPLOY_ID"
+          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
 
-            sleep 10
-          done
+  deploy-admin-spring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-          echo "❌ Timed out waiting for deploy"
-          exit 1
+      - name: Trigger Render Deploy (ADMIN-Spring)
+        run: |
+          echo "🚀 Deploying ADMIN-Spring..."
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_ADMIN_SPRING_ID }}/deploys)
+
+          echo "Raw trigger response: $RESPONSE"
+
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID for ADMIN-Spring"
+            exit 1
+          fi
+
+          echo "Got deploy ID for ADMIN-Spring: $DEPLOY_ID"
+          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
