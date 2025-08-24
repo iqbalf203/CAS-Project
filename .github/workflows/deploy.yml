@@ -39,12 +39,13 @@ jobs:
       - name: ⏳ Wait for MYAPP Deploy
         run: |
           DEPLOY_ID="${{ steps.trigger_myapp.outputs.deploy_id }}"
-          echo "⏳ Waiting for MYAPP deploy to finish (Deploy ID: $DEPLOY_ID)..."
+          SERVICE_ID="${{ secrets.RENDER_MYAPP_ID }}"
+          echo "⏳ Waiting for MYAPP deploy to finish (Service: $SERVICE_ID, Deploy: $DEPLOY_ID)..."
 
           for i in {1..30}; do
             echo "🔄 Checking status (attempt $i/30)..."
             RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID)
+              https://api.render.com/v1/services/$SERVICE_ID/deploys/$DEPLOY_ID)
 
             echo "🔍 Raw status response: $RESPONSE"
 
