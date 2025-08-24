@@ -54,7 +54,7 @@ jobs:
               echo "❌ [USER] Deploy failed!"
               exit 1
             fi
-            sleep 10
+            sleep 15
           done
           echo "⚠️ [USER] Timed out waiting for deploy"
           exit 1
@@ -102,7 +102,7 @@ jobs:
               echo "❌ [ADMIN-SPRING] Deploy failed!"
               exit 1
             fi
-            sleep 10
+            sleep 30
           done
           echo "⚠️ [ADMIN-SPRING] Timed out waiting for deploy"
           exit 1
