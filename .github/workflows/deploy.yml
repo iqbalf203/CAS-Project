@@ -8,7 +8,7 @@ on:
       - 'myapp/**'
       - 'user/**'
       - 'Admin-Spring/**'
-
+  workflow_dispatch: 
 jobs:
   deploy-myapp:
     runs-on: ubuntu-latest
