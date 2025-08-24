@@ -13,6 +13,7 @@ on:
 jobs:
   deploy-user:
     name: "Deploy: user"
+    environment: user
     if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'user/') || contains(join(github.event.commits.*.added, ' '), 'user/') || contains(join(github.event.commits.*.removed, ' '), 'user/')
     runs-on: ubuntu-latest
     steps:
@@ -60,6 +61,7 @@ jobs:
 
   deploy-admin-spring:
     name: "Deploy: Admin-Spring"
+    environment: Admin-Spring
     if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
     runs-on: ubuntu-latest
     steps:
@@ -107,6 +109,7 @@ jobs:
 
   deploy-myapp:
     name: "Deploy: myapp"
+    environment: myapp
     needs: [deploy-user, deploy-admin-spring]
     if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
     runs-on: ubuntu-latest
