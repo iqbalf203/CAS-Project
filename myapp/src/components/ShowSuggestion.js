@@ -297,7 +297,7 @@ const ShowSuggestion = (props) => {
                     </Modal.Body>
                 </Modal>
             </Container>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </>
     );
 };

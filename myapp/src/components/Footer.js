@@ -48,7 +48,7 @@ const Footer = () => {
           <img src="../logo.png" alt="Bequant Logo" style={logoImgStyle} /> {/* Replace with your actual logo */}
           <p>City Administration System</p>
           <p>Empowering cities with seamless governance solutions, transforming administration into efficiency and excellence</p>
-          <p>For <Link to="/admin">Admins</Link></p>
+          <p>For <Link to="/admin" target="_blank" rel="noopener noreferrer">Admins</Link></p>
         </div>
       </div>
       <div style={bottomStyle}>

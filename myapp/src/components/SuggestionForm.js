@@ -88,7 +88,7 @@ const SuggestionForm = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </div>
     );
 };

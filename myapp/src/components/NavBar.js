@@ -24,11 +24,11 @@ function NavBar() {
     };
 
     const logout = ()=>{
+        localStorage.removeItem("cas-token");
         dispatch(setCurrentUser({}));
         dispatch(setToken(''));
         dispatch(setLoggedIn(false))
-        navigate(['/logout'])
-        
+        navigate(['/'])
     }
 
     return (

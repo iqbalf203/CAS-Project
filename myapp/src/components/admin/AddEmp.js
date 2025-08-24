@@ -69,7 +69,7 @@ const AddEmp = () => {
             
             <button className="btn btn-primary" type='submit'>Submit</button>
         </form>
-        <ToastContainer/>
+        {/* <ToastContainer/> */}
     </>
   )
 }
