@@ -11,20 +11,23 @@ import { isEmployee, isCitizen, isCitizenOrEmployee } from './middleware/middlew
 import { authenticateJWT } from './services/auth.service.js';
 
 const app = express();
-app.use(cors()); 
-app.use(express.json());
-app.use(authenticateJWT);
 // Enable trust proxy
 app.set('trust proxy', 1);
+app.use(cors()); 
+app.use(express.json());
 
 // Rate limiter for login route
 const limiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute window
-    max: 10, // limit each IP to 5 requests per windowMs
-    message: "Too many requests from this IP, please try again later."
+    windowMs: 60 * 1000,
+    max: 10,
+    handler: (req, res) => {
+        console.log(`IP ${req.ip} is rate limited.`);
+        res.status(429).send("Too many requests from this IP, please try again later.");
+    }
 });
 
 app.use(limiter);
+app.use(authenticateJWT);
 
 const PORT = process.env.PORT || 3001;
 
