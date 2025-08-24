@@ -1,99 +1,147 @@
-name: Deploy to Render
+name: Deploy CAS to Render
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - 'myapp/**'
-      - 'user/**'
-      - 'Admin-Spring/**'
+      - "user/**"
+      - "Admin-Spring/**"
+      - "myapp/**"
 
 jobs:
-  deploy-myapp:
-    if: contains(github.event.head_commit.message, 'myapp') || github.event.head_commit.message == '' 
-    runs-on: ubuntu-latest
-    if: contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
-    steps:
-      - name: Trigger Render Deploy (myapp)
-        id: trigger
-        run: |
-          DEPLOY_ID=$(curl -s -X POST \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_MYAPP_ID }}/deploys | jq -r .id)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
-
-      - name: Wait for Deploy to Complete (myapp)
-        run: |
-          for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
-            echo "Current status: $STATUS"
-            if [ "$STATUS" = "live" ]; then
-              exit 0
-            elif [ "$STATUS" = "failed" ]; then
-              exit 1
-            fi
-            sleep 10
-          done
-          echo "Timed out waiting for deploy"
-          exit 1
-
   deploy-user:
-    if: contains(join(github.event.commits.*.modified, ' '), 'user/') || contains(join(github.event.commits.*.added, ' '), 'user/') || contains(join(github.event.commits.*.removed, ' '), 'user/')
+    name: "Deploy: user"
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'user/') || contains(join(github.event.commits.*.added, ' '), 'user/') || contains(join(github.event.commits.*.removed, ' '), 'user/')
+    environment: user
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Render Deploy (user)
-        id: trigger
+      - uses: actions/checkout@v3
+      - name: 🚀 Trigger USER Deploy
+        id: trigger_user
         run: |
-          DEPLOY_ID=$(curl -s -X POST \
+          echo "🔔 Triggering deploy on Render for USER..."
+          RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_USER_ID }}/deploys | jq -r .id)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
+            https://api.render.com/v1/services/${{ secrets.RENDER_USER_ID }}/deploys)
+          echo "📡 Raw trigger response: $RESPONSE"
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID for USER"
+            exit 1
+          fi
+          echo "✅ Got deploy ID: $DEPLOY_ID"
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
 
-      - name: Wait for Deploy to Complete (user)
+      - name: ⏳ Wait for USER Deploy
         run: |
+          DEPLOY_ID="${{ steps.trigger_user.outputs.deploy_id }}"
+          SERVICE_ID="${{ secrets.RENDER_USER_ID }}"
+          echo "⏳ Waiting for USER deploy (Deploy ID: $DEPLOY_ID)..."
           for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
-            echo "Current status: $STATUS"
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/services/$SERVICE_ID/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
+            echo "🔄 [USER] Attempt $i/30 – Status: $STATUS"
             if [ "$STATUS" = "live" ]; then
+              echo "✅ Deploy succeeded!"
               exit 0
             elif [ "$STATUS" = "failed" ]; then
+              echo "❌ Deploy failed!"
               exit 1
             fi
-            sleep 10
+            sleep 15
           done
-          echo "Timed out waiting for deploy"
+          echo "⚠️ Timed out waiting for deploy"
           exit 1
 
   deploy-admin-spring:
-    if: contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
+    name: "Deploy: Admin-Spring"
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
+    environment: Admin-Spring
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Render Deploy (Admin-Spring)
-        id: trigger
+      - uses: actions/checkout@v3
+      - name: 🚀 Trigger ADMIN-SPRING Deploy
+        id: trigger_admin
         run: |
-          DEPLOY_ID=$(curl -s -X POST \
+          echo "🔔 Triggering deploy on Render for ADMIN-SPRING..."
+          RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_ADMIN_SPRING_ID }}/deploys | jq -r .id)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
+            https://api.render.com/v1/services/${{ secrets.RENDER_ADMIN_SPRING_ID }}/deploys)
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID for ADMIN-SPRING"
+            exit 1
+          fi
+          echo "✅ Got deploy ID: $DEPLOY_ID"
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
 
-      - name: Wait for Deploy to Complete (Admin-Spring)
+      - name: ⏳ Wait for ADMIN-SPRING Deploy
         run: |
+          DEPLOY_ID="${{ steps.trigger_admin.outputs.deploy_id }}"
+          SERVICE_ID="${{ secrets.RENDER_ADMIN_SPRING_ID }}"
           for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
-            echo "Current status: $STATUS"
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/services/$SERVICE_ID/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
+            echo "🔄 [ADMIN-SPRING] Attempt $i/30 – Status: $STATUS"
             if [ "$STATUS" = "live" ]; then
+              echo "✅ Deploy succeeded!"
               exit 0
             elif [ "$STATUS" = "failed" ]; then
+              echo "❌ Deploy failed!"
+              exit 1
+            fi
+            sleep 30
+          done
+          echo "⚠️ Timed out waiting for deploy"
+          exit 1
+
+  deploy-myapp:
+    name: "Deploy: myapp"
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
+    needs: [deploy-user, deploy-admin-spring]
+    environment: myapp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 🚀 Trigger MYAPP Deploy
+        id: trigger_myapp
+        run: |
+          echo "🔔 Triggering deploy on Render for MYAPP..."
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_MYAPP_ID }}/deploys)
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID for MYAPP"
+            exit 1
+          fi
+          echo "✅ Got deploy ID: $DEPLOY_ID"
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
+
+      - name: ⏳ Wait for MYAPP Deploy
+        run: |
+          DEPLOY_ID="${{ steps.trigger_myapp.outputs.deploy_id }}"
+          SERVICE_ID="${{ secrets.RENDER_MYAPP_ID }}"
+          for i in {1..30}; do
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/services/$SERVICE_ID/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
+            echo "🔄 [MYAPP] Attempt $i/30 – Status: $STATUS"
+            if [ "$STATUS" = "live" ]; then
+              echo "✅ Deploy succeeded!"
+              exit 0
+            elif [ "$STATUS" = "failed" ]; then
+              echo "❌ Deploy failed!"
               exit 1
             fi
             sleep 10
           done
-          echo "Timed out waiting for deploy"
+          echo "⚠️ Timed out waiting for deploy"
           exit 1
