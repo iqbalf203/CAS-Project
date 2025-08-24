@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MDBCol, MDBBtn, MDBIcon, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
 import './AdminProfile.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminService from '../../services/AdminService';
 import {useSelector} from 'react-redux';
@@ -177,7 +177,6 @@ const AdminProfile = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   )
 }

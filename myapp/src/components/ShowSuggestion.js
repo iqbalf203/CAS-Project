@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Button, Container, Row, Col, Modal, Form, ListGroup, Badge, ButtonGroup } from 'react-bootstrap';
 import SuggestionService from '../services/SuggestionService';
 import CommentService from '../services/comment.service';
 import { useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './ShowSuggestion.css';
 
 const ShowSuggestion = (props) => {
@@ -297,7 +297,6 @@ const ShowSuggestion = (props) => {
                     </Modal.Body>
                 </Modal>
             </Container>
-            {/* <ToastContainer/> */}
         </>
     );
 };

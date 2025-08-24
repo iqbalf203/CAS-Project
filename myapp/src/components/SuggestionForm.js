@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SuggestionService from '../services/SuggestionService';
 import { useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const SuggestionForm = () => {
     const userId = useSelector(store => store.user.currentUser._id);
@@ -88,7 +88,6 @@ const SuggestionForm = () => {
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-            {/* <ToastContainer/> */}
         </div>
     );
 };

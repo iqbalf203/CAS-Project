@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ComplaintService from '../services/ComplaintService';
 import { useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const complaintTypes = ['Noise', 'Road Maintenance', 'Waste Management', 'Public Safety', 'Infrastructure', 'Environmental', 'Building Code', 'Traffic'];
 
@@ -110,7 +110,6 @@ let newFormData;
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
-      {/* <ToastContainer/> */}
     </div>
   );
 }

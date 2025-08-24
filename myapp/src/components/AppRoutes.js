@@ -1,5 +1,4 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import NavBar from './NavBar'
 import { useSelector } from 'react-redux'
 import Login from './Login'
@@ -13,8 +12,6 @@ import Logout from './Logout'
 import ShowUser from './ShowUser'
 import Home from './Home'
 import AuthInit from '../auth/AuthInit'
-import { ToastContainer } from 'react-toastify'
-
 
 const AppRoutes = () => {
 
@@ -25,10 +22,6 @@ const AppRoutes = () => {
     <>
         <NavBar />
         <AuthInit />
-        <ToastContainer
-          position="top-right" 
-          autoClose={1500}
-        />
         <Routes>
 
         <Route path='/home' Component={Home}></Route>
