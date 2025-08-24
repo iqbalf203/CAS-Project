@@ -8,7 +8,8 @@ on:
       - 'myapp/**'
       - 'user/**'
       - 'Admin-Spring/**'
-  workflow_dispatch: 
+  workflow_dispatch:
+
 jobs:
   deploy-myapp:
     runs-on: ubuntu-latest
@@ -31,13 +32,16 @@ jobs:
       - name: Wait for Deploy to Complete (myapp)
         run: |
           for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
             echo "Current status: $STATUS"
             if [ "$STATUS" = "live" ]; then
               exit 0
             elif [ "$STATUS" = "failed" ]; then
               exit 1
+            elif [ "$STATUS" = "unknown" ]; then
+              echo "Warning: API returned unexpected response"
             fi
             sleep 10
           done
@@ -63,13 +67,16 @@ jobs:
       - name: Wait for Deploy to Complete (user)
         run: |
           for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
             echo "Current status: $STATUS"
             if [ "$STATUS" = "live" ]; then
               exit 0
             elif [ "$STATUS" = "failed" ]; then
               exit 1
+            elif [ "$STATUS" = "unknown" ]; then
+              echo "Warning: API returned unexpected response"
             fi
             sleep 10
           done
@@ -95,13 +102,16 @@ jobs:
       - name: Wait for Deploy to Complete (Admin-Spring)
         run: |
           for i in {1..30}; do
-            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID | jq -r .status)
+            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+              https://api.render.com/v1/deploys/$DEPLOY_ID)
+            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
             echo "Current status: $STATUS"
             if [ "$STATUS" = "live" ]; then
               exit 0
             elif [ "$STATUS" = "failed" ]; then
               exit 1
+            elif [ "$STATUS" = "unknown" ]; then
+              echo "Warning: API returned unexpected response"
             fi
             sleep 10
           done
