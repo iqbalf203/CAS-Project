@@ -39,8 +39,9 @@ const Login = () => {
                 dispatch(setLoggedIn(true))
                 dispatch(setCurrentUser(resp.data.user))
                 dispatch(setToken(resp.data.token))
-
-                navigate('/user/profile')
+                localStorage.setItem("cas-token", resp.data.token);
+                toast.success("Logged In!");
+                navigate('/')
             }
             else {
                 toast.error('Invalid credentials')

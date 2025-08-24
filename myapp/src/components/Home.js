@@ -144,7 +144,7 @@ const Home = () => {
                 </Modal>
             </Container>
             <Footer />
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </div>
 
     );

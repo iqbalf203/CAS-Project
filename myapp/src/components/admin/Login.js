@@ -100,7 +100,7 @@ function AdminLogin(props) {
         </MDBCol>
 
       </MDBRow>
-<ToastContainer/>
+{/* <ToastContainer/> */}
     </MDBContainer>
   );
 }
