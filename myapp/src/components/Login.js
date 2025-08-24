@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react'
+import { toast } from 'react-toastify';
 import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput} from 'mdb-react-ui-kit';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -138,9 +138,6 @@ const Login = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
-            <ToastContainer />
-
         </>
     )
 }

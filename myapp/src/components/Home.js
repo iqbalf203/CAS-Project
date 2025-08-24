@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Badge, Modal } from 'react-bootstrap';
@@ -10,7 +9,7 @@ import './Home.css'
 import { Link } from 'react-router-dom';
 import ComplaintService from '../services/ComplaintService';
 import UserService from '../services/UserService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
@@ -144,7 +143,6 @@ const Home = () => {
                 </Modal>
             </Container>
             <Footer />
-            {/* <ToastContainer/> */}
         </div>
 
     );

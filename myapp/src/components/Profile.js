@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { MDBCol, MDBBtn, MDBIcon, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
+import { useEffect, useState } from 'react';
+import { MDBCol, MDBBtn, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography } from 'mdb-react-ui-kit';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import './Profile.css'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import {useSelector} from 'react-redux';
 import UserService from '../services/UserService';
 
@@ -181,7 +181,6 @@ const Profile = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   )
 }

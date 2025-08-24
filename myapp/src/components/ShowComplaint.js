@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardBody, CardTitle, CardText, Badge, Col, ButtonGroup, Button, Form, Modal } from 'react-bootstrap';
 import ComplaintService from '../services/ComplaintService';
 import { useSelector } from 'react-redux';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const ShowComplaint = () => {
   
@@ -193,7 +193,6 @@ const ShowComplaint = () => {
           <Button variant="primary" onClick={handleEmailSend}>Send Email</Button>
         </Modal.Footer>
       </Modal>
-      {/* <ToastContainer/> */}
     </>
   );
 };

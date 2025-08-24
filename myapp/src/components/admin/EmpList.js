@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -187,9 +187,6 @@ const EmpList = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
-
-      <ToastContainer />
     </>
   )
 }

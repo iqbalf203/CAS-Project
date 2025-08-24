@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -9,7 +9,7 @@ import {
 } from "mdb-react-ui-kit";
 import "./SignUp.css";
 import UserService from "../services/UserService";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Popover, OverlayTrigger } from "react-bootstrap";
 function SignUp() {
@@ -304,7 +304,6 @@ function SignUp() {
           </MDBCardBody>
         </MDBCard>
       </MDBContainer>
-      <ToastContainer />
     </>
   );
 }

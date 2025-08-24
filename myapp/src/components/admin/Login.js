@@ -1,7 +1,6 @@
-import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setAdminId,setToken,setLoggedIn } from '../../redux/AdminSlice';
 import {useDispatch} from 'react-redux'
@@ -100,7 +99,6 @@ function AdminLogin(props) {
         </MDBCol>
 
       </MDBRow>
-{/* <ToastContainer/> */}
     </MDBContainer>
   );
 }
