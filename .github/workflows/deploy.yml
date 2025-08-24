@@ -11,9 +11,13 @@ on:
 
 jobs:
   deploy-myapp:
-    if: contains(github.event.head_commit.message, 'myapp') || github.event.head_commit.message == '' 
     runs-on: ubuntu-latest
-    if: contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
+    if: >
+      contains(github.event.head_commit.message, 'myapp') ||
+      github.event.head_commit.message == '' ||
+      contains(join(github.event.commits.*.modified, ' '), 'myapp/') ||
+      contains(join(github.event.commits.*.added, ' '), 'myapp/') ||
+      contains(join(github.event.commits.*.removed, ' '), 'myapp/')
     steps:
       - name: Trigger Render Deploy (myapp)
         id: trigger
@@ -41,8 +45,11 @@ jobs:
           exit 1
 
   deploy-user:
-    if: contains(join(github.event.commits.*.modified, ' '), 'user/') || contains(join(github.event.commits.*.added, ' '), 'user/') || contains(join(github.event.commits.*.removed, ' '), 'user/')
     runs-on: ubuntu-latest
+    if: >
+      contains(join(github.event.commits.*.modified, ' '), 'user/') ||
+      contains(join(github.event.commits.*.added, ' '), 'user/') ||
+      contains(join(github.event.commits.*.removed, ' '), 'user/')
     steps:
       - name: Trigger Render Deploy (user)
         id: trigger
@@ -70,8 +77,11 @@ jobs:
           exit 1
 
   deploy-admin-spring:
-    if: contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
     runs-on: ubuntu-latest
+    if: >
+      contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') ||
+      contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') ||
+      contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
     steps:
       - name: Trigger Render Deploy (Admin-Spring)
         id: trigger
