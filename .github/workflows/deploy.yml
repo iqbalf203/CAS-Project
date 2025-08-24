@@ -103,7 +103,6 @@ jobs:
 
   deploy-myapp:
     name: "Deploy: myapp"
-    environment: myapp
     if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
     needs: [deploy-user, deploy-admin-spring]
     environment: myapp
