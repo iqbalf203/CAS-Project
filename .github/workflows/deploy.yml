@@ -1,29 +1,23 @@
 name: Deploy CAS to Render
 
-# This workflow is triggered by pushes to the 'main' branch
-# OR can be manually triggered via the GitHub Actions UI.
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - "user/**"
+      - "Admin-Spring/**"
+      - "myapp/**"
 
-# The 'jobs' section defines the individual tasks for the workflow.
 jobs:
-  # This job handles the deployment of the 'user' module.
   deploy-user:
     name: "Deploy: user"
-    runs-on: ubuntu-latest
-    
-    # The 'if' condition checks for changes in the 'user' module's directory.
-    # It also allows for manual triggers via 'workflow_dispatch'.
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.commits.*.added, 'user/') || contains(github.event.commits.*.modified, 'user/') || contains(github.event.commits.*.removed, 'user/')
-    
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'user/') || contains(join(github.event.commits.*.added, ' '), 'user/') || contains(join(github.event.commits.*.removed, ' '), 'user/')
     environment: user
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v3
       - name: 🚀 Trigger USER Deploy
         id: trigger_user
         run: |
@@ -63,15 +57,13 @@ jobs:
           echo "⚠️ Timed out waiting for deploy"
           exit 1
 
-  # This job handles the deployment of the 'Admin-Spring' module.
   deploy-admin-spring:
     name: "Deploy: Admin-Spring"
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.commits.*.added, 'Admin-Spring/') || contains(github.event.commits.*.modified, 'Admin-Spring/') || contains(github.event.commits.*.removed, 'Admin-Spring/')
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') || contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
     environment: Admin-Spring
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - uses: actions/checkout@v3
       - name: 🚀 Trigger ADMIN-SPRING Deploy
         id: trigger_admin
         run: |
@@ -109,15 +101,15 @@ jobs:
           echo "⚠️ Timed out waiting for deploy"
           exit 1
 
-  # This job handles the deployment of the 'myapp' module.
   deploy-myapp:
     name: "Deploy: myapp"
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.commits.*.added, 'myapp/') || contains(github.event.commits.*.modified, 'myapp/') || contains(github.event.commits.*.removed, 'myapp/')
     environment: myapp
+    if: github.event_name == 'workflow_dispatch' || contains(join(github.event.commits.*.modified, ' '), 'myapp/') || contains(join(github.event.commits.*.added, ' '), 'myapp/') || contains(join(github.event.commits.*.removed, ' '), 'myapp/')
+    needs: [deploy-user, deploy-admin-spring]
+    environment: myapp
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - uses: actions/checkout@v3
       - name: 🚀 Trigger MYAPP Deploy
         id: trigger_myapp
         run: |
