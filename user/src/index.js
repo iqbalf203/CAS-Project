@@ -14,13 +14,17 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 app.use(authenticateJWT);
+// Enable trust proxy
+app.set('trust proxy', true);
 
 // Rate limiter for login route
-const loginLimiter = rateLimit({
+const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute window
-    max: 5, // limit each IP to 5 requests per windowMs
-    message: "Too many login attempts from this IP, please try again later."
+    max: 10, // limit each IP to 5 requests per windowMs
+    message: "Too many requests from this IP, please try again later."
 });
+
+app.use(limiter);
 
 const PORT = process.env.PORT || 3001;
 
@@ -37,7 +41,7 @@ app.get('/employees', getAllEmployees)
 app.get('/user/:id', isCitizenOrEmployee, getUserById)
 app.post('/get-pass',getUserByUserName)
 app.post('/register', registerUser);
-app.post('/login', loginLimiter, loginUser);
+app.post('/login', loginUser);
 app.put('/user/:id', updateUserProfile);
 app.delete('/employee/:id',deleteEmployee)
 
