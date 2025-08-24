@@ -25,7 +25,6 @@ const limiter = rateLimit({
         res.status(429).send("Too many requests from this IP, please try again later.");
     }
 });
-
 app.use(limiter);
 app.use(authenticateJWT);
 
