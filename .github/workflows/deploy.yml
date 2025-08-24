@@ -4,116 +4,62 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'myapp/**'
-      - 'user/**'
-      - 'Admin-Spring/**'
-  workflow_dispatch:
+  workflow_dispatch: # allow manual runs
 
 jobs:
-  deploy-myapp:
+  deploy:
     runs-on: ubuntu-latest
-    if: >
-      contains(github.event.head_commit.message, 'myapp') ||
-      github.event.head_commit.message == '' ||
-      contains(join(github.event.commits.*.modified, ' '), 'myapp/') ||
-      contains(join(github.event.commits.*.added, ' '), 'myapp/') ||
-      contains(join(github.event.commits.*.removed, ' '), 'myapp/')
     steps:
-      - name: Trigger Render Deploy (myapp)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Deploy
         id: trigger
         run: |
-          DEPLOY_ID=$(curl -s -X POST \
+          echo "Triggering deploy on Render..."
+          RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_MYAPP_ID }}/deploys | jq -r .id)
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys)
+
+          echo "Raw trigger response: $RESPONSE"
+
+          DEPLOY_ID=$(echo "$RESPONSE" | jq -r '.id // empty')
+
+          if [ -z "$DEPLOY_ID" ]; then
+            echo "❌ Failed to get deploy ID"
+            exit 1
+          fi
+
+          echo "Got deploy ID: $DEPLOY_ID"
+
+          # Expose deploy id for next steps
           echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
 
-      - name: Wait for Deploy to Complete (myapp)
+      - name: Wait for Render Deploy
         run: |
+          echo "Polling deploy status for ID: $DEPLOY_ID"
           for i in {1..30}; do
             RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
               https://api.render.com/v1/deploys/$DEPLOY_ID)
+
+            echo "Raw status response: $RESPONSE"
+
             STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
             echo "Current status: $STATUS"
+
             if [ "$STATUS" = "live" ]; then
+              echo "✅ Deploy is live!"
               exit 0
             elif [ "$STATUS" = "failed" ]; then
+              echo "❌ Deploy failed!"
               exit 1
             elif [ "$STATUS" = "unknown" ]; then
-              echo "Warning: API returned unexpected response"
+              echo "⚠️ API returned unexpected response"
             fi
+
             sleep 10
           done
-          echo "Timed out waiting for deploy"
-          exit 1
 
-  deploy-user:
-    runs-on: ubuntu-latest
-    if: >
-      contains(join(github.event.commits.*.modified, ' '), 'user/') ||
-      contains(join(github.event.commits.*.added, ' '), 'user/') ||
-      contains(join(github.event.commits.*.removed, ' '), 'user/')
-    steps:
-      - name: Trigger Render Deploy (user)
-        id: trigger
-        run: |
-          DEPLOY_ID=$(curl -s -X POST \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_USER_ID }}/deploys | jq -r .id)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
-
-      - name: Wait for Deploy to Complete (user)
-        run: |
-          for i in {1..30}; do
-            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID)
-            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
-            echo "Current status: $STATUS"
-            if [ "$STATUS" = "live" ]; then
-              exit 0
-            elif [ "$STATUS" = "failed" ]; then
-              exit 1
-            elif [ "$STATUS" = "unknown" ]; then
-              echo "Warning: API returned unexpected response"
-            fi
-            sleep 10
-          done
-          echo "Timed out waiting for deploy"
-          exit 1
-
-  deploy-admin-spring:
-    runs-on: ubuntu-latest
-    if: >
-      contains(join(github.event.commits.*.modified, ' '), 'Admin-Spring/') ||
-      contains(join(github.event.commits.*.added, ' '), 'Admin-Spring/') ||
-      contains(join(github.event.commits.*.removed, ' '), 'Admin-Spring/')
-    steps:
-      - name: Trigger Render Deploy (Admin-Spring)
-        id: trigger
-        run: |
-          DEPLOY_ID=$(curl -s -X POST \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            https://api.render.com/v1/services/${{ secrets.RENDER_ADMIN_SPRING_ID }}/deploys | jq -r .id)
-          echo "DEPLOY_ID=$DEPLOY_ID" >> $GITHUB_ENV
-
-      - name: Wait for Deploy to Complete (Admin-Spring)
-        run: |
-          for i in {1..30}; do
-            RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-              https://api.render.com/v1/deploys/$DEPLOY_ID)
-            STATUS=$(echo "$RESPONSE" | jq -r '.status // "unknown"')
-            echo "Current status: $STATUS"
-            if [ "$STATUS" = "live" ]; then
-              exit 0
-            elif [ "$STATUS" = "failed" ]; then
-              exit 1
-            elif [ "$STATUS" = "unknown" ]; then
-              echo "Warning: API returned unexpected response"
-            fi
-            sleep 10
-          done
-          echo "Timed out waiting for deploy"
+          echo "❌ Timed out waiting for deploy"
           exit 1
