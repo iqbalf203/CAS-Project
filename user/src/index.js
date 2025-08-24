@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(authenticateJWT);
 // Enable trust proxy
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 // Rate limiter for login route
 const limiter = rateLimit({
